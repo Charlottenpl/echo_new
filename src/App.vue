@@ -28,11 +28,9 @@ onMounted(() => {
 
 <style scoped>
 .home-container {
-  background: #f3f3f3;
-  /*background: linear-gradient(to right, rgb(241, 235, 238), rgb(236, 233, 239), rgb(222, 223, 234)); !*好网站：https://hypercolor.dev!*!*/
+  background: linear-gradient(to top, rgb(255, 255, 255), rgb(247, 249, 252), rgb(242, 246, 252), rgb(223, 232, 252)); /*好网站：https://hypercolor.dev!*/
   /*background: linear-gradient(to right, rgb(255, 228, 230), rgb(204, 251, 241));*/
   box-sizing: border-box; /* 即使元素有内边距，它的总宽度也不会超过设定的宽度(仅父组件100%，且设置padding有用) */
-  padding: 12px;
   width: 100vw; /* 使用视口宽度单位 */
   height: 100vh; /* 使用视口高度单位 */
   margin: 0; /* 移除默认的 margin */

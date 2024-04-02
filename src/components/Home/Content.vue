@@ -32,7 +32,6 @@ let blogs = data.test.blogs
     height: 0; /* 隐藏垂直滚动条 */
   }
 
-  background-color: #fafafa;
   /* 其他样式 */
   display: flex;
 }
@@ -46,6 +45,5 @@ let blogs = data.test.blogs
   flex: 1;
   margin: 10px;
   margin-top: 20px;
-  background: #f3f3f3;
 }
 </style>

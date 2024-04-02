@@ -22,6 +22,5 @@ const data = echoed()
 
 .tag_name{
   border-radius: 10px;
-  border: #646cff solid 0 1px 1px 0;
 }
 </style>
