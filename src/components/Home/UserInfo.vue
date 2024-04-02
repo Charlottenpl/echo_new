@@ -10,7 +10,7 @@ const data = echoed()
     <img class="user_img" :src="data.userInfo.img" alt="头像"/>
 
     <div style="display: inline-block;height: 40px; text-align: left">
-      <div style="font-size: medium">
+      <div style="font-size: medium; font-weight: bold; color: #3c4f60">
         两小无猜
       </div>
       <div style="color: #888888; font-size: small">
