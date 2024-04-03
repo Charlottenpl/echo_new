@@ -9,17 +9,35 @@ const item = defineProps<{
 <template>
   <div class="box">
     <h3>{{title}}</h3>
-    <span style="color: #242424">{{description}}</span>
+    <span class="description">{{description}}</span>
   </div>
 </template>
 
 <style scoped>
 .box{
   text-align: left;
-  background-color: #eaeaea;
+  background-color: #f1f7ff77;
   padding: 10px;
   margin: 10px;
   border-radius: 8px;
+  border: 1px solid #3b445a;
+}
 
+.description{
+  color: #3b445a;
+}
+
+/*---------------------------------------------- Dark Theme ----------------------------------------------------------*/
+
+/* 深色主题 */
+@media (prefers-color-scheme: dark) {
+  .box{
+    background-color: #323a53;
+    border: 1px solid #89929f44;
+  }
+
+  .description{
+    color: #fafcff;
+  }
 }
 </style>
