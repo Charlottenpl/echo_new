@@ -29,7 +29,7 @@ import Search from "./Search.vue";
 /* 深色主题 */
 @media (prefers-color-scheme: dark) {
   .aside-panel {
-    background: linear-gradient(to top, rgb(26, 26, 34), rgb(27, 27, 35), rgb(46, 53, 79), rgb(62, 77, 119));
+    background: linear-gradient(to top, rgb(35, 34, 34), rgb(35, 34, 34), rgb(42, 43, 49), rgb(42, 42, 44));
   }
 }
 </style>

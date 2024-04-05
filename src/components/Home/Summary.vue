@@ -3,41 +3,79 @@ const item = defineProps<{
   title: string,
   description: number,
 }>()
-
+function show_blog(){
+  //todo 显示 alert
+  alert("show blog.")
+}
 </script>
 
 <template>
-  <div class="box">
-    <h3>{{title}}</h3>
-    <span class="description">{{description}}</span>
+  <div :onclick="show_blog" class="blog_box">
+
+    <div class="box">
+      <span class="title">{{title}}</span>
+      <span class="description">{{description}}</span>
+      <span class="info">发表于 2022-03-14 02:20阅读：68评论：0推荐：0</span>
+    </div>
+
+    <img src="../../assets/blog_pre.jpeg" style="width: 150px; height: 150px; border-radius: 10px; box-shadow: 0 0 10px"/>
   </div>
+
 </template>
 
 <style scoped>
-.box{
-  text-align: left;
-  background-color: #f1f7ff77;
-  padding: 10px;
+.blog_box{
+  cursor: pointer;
+  display: flex;
+  flex-direction: row !important;
+  flex-wrap: nowrap;
   margin: 10px;
-  border-radius: 8px;
-  border: 1px solid #3b445a;
+  padding: 30px;
+  align-items: flex-start;
+  background: #4f4f4f33;
+  border-radius: 10px;
+}
+
+.box{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  align-items: flex-start;
+  margin-right: 20px;
+}
+
+.title{
+  font-size: large;
+  display: block;
+  margin-bottom: 20px;
 }
 
 .description{
-  color: #3b445a;
+  color: #595959 !important;
+  font-size: medium;
+  flex-grow: 1;
+}
+
+.info{
+  font-size: small;
+  align-self: flex-end;
+  flex: 0 0 auto;
+  color: #595959
 }
 
 /*---------------------------------------------- Dark Theme ----------------------------------------------------------*/
 
 /* 深色主题 */
 @media (prefers-color-scheme: dark) {
-  .box{
-    background-color: #323a53;
-    border: 1px solid #89929f44;
-  }
 
   .description{
-    color: #fafcff;
+    color: #a7a7a7 !important;
+  }
+
+  .info{
+    color: #a7a7a7 !important;
   }
 }
 </style>

@@ -31,7 +31,7 @@ onMounted(() => {
   background: linear-gradient(to top, rgb(255, 255, 255), rgb(247, 249, 252), rgb(242, 246, 252), rgb(223, 232, 252)); /*好网站：https://hypercolor.dev!*/
   /*background: linear-gradient(to right, rgb(255, 228, 230), rgb(204, 251, 241));*/
   box-sizing: border-box; /* 即使元素有内边距，它的总宽度也不会超过设定的宽度(仅父组件100%，且设置padding有用) */
-  width: 70vw; /* 使用视口宽度单位 */
+  width: 100vw; /* 使用视口宽度单位 */
   height: 100vh; /* 使用视口高度单位 */
   margin: 0; /* 移除默认的 margin */
   /*
@@ -68,7 +68,8 @@ onMounted(() => {
 /* 深色主题 */
 @media (prefers-color-scheme: dark) {
   .home-container {
-    background: linear-gradient(to top, rgb(19, 19, 27), rgb(19, 19, 27), rgb(40, 48, 75), rgb(56, 69, 112)); /*好网站：https://hypercolor.dev!*/
+    /*background: linear-gradient(to top, rgb(19, 19, 27), rgb(19, 19, 27), rgb(40, 48, 75), rgb(56, 69, 112)); /*好网站：https://hypercolor.dev!*/
+    background: #00000000;
   }
 }
 </style>

@@ -4,7 +4,7 @@
 
 <template>
   <div class="search_box">
-    search...
+    <img src=""/>search...
   </div>
 </template>
 
