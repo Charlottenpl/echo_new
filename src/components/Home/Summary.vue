@@ -18,7 +18,7 @@ function show_blog(){
       <span class="info">发表于 2022-03-14 02:20阅读：68评论：0推荐：0</span>
     </div>
 
-    <img src="../../assets/blog_pre.jpeg" style="width: 150px; height: 150px; border-radius: 10px; box-shadow: 0 0 10px"/>
+    <img src="../../assets/blog_pre.jpeg" class="blog_img"/>
   </div>
 
 </template>
@@ -37,8 +37,8 @@ function show_blog(){
 }
 
 .box{
-  height: 100%;
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   text-align: left;
@@ -50,12 +50,15 @@ function show_blog(){
   font-size: large;
   display: block;
   margin-bottom: 20px;
+  max-width: 550px;
 }
 
 .description{
   color: #595959 !important;
+  line-height: 21px;
+  word-break: break-all;
   font-size: medium;
-  flex-grow: 1;
+  max-width: 550px;
 }
 
 .info{
@@ -63,6 +66,12 @@ function show_blog(){
   align-self: flex-end;
   flex: 0 0 auto;
   color: #595959
+}
+
+.blog_img{
+  width: 150px;
+  height: 150px;
+  border-radius: 10px;
 }
 
 /*---------------------------------------------- Dark Theme ----------------------------------------------------------*/

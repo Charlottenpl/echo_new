@@ -40,6 +40,30 @@ export const echoed = defineStore('main_store', {
                     title: "Android、iOS快速全球化工具",
                     description: "在进行移动端全球化的时候，我们需要根据语言类型准备格式相同，文本不同的好多个文件，如果一个一个翻译显然很浪费时间，如果整篇复制到Google翻译通常翻译出来的文本是没办法直接用的"
                 },
+                {
+                    title: "INSTALL_FAILED_USER_RESTRICTED",
+                    description: "错误分析 某天早上调试app的时候突然就发现无法安装了，adb uninstall之后也没用。"
+                },
+                {
+                    title: "Android、iOS快速全球化工具",
+                    description: "在进行移动端全球化的时候，我们需要根据语言类型准备格式相同，文本不同的好多个文件，如果一个一个翻译显然很浪费时间，如果整篇复制到Google翻译通常翻译出来的文本是没办法直接用的"
+                },
+                {
+                    title: "INSTALL_FAILED_USER_RESTRICTED",
+                    description: "错误分析 某天早上调试app的时候突然就发现无法安装了，adb uninstall之后也没用。"
+                },
+                {
+                    title: "Android、iOS快速全球化工具",
+                    description: "在进行移动端全球化的时候，我们需要根据语言类型准备格式相同，文本不同的好多个文件，如果一个一个翻译显然很浪费时间，如果整篇复制到Google翻译通常翻译出来的文本是没办法直接用的"
+                },
+                {
+                    title: "INSTALL_FAILED_USER_RESTRICTED",
+                    description: "错误分析 某天早上调试app的时候突然就发现无法安装了，adb uninstall之后也没用。"
+                },
+                {
+                    title: "Android、iOS快速全球化工具",
+                    description: "在进行移动端全球化的时候，我们需要根据语言类型准备格式相同，文本不同的好多个文件，如果一个一个翻译显然很浪费时间，如果整篇复制到Google翻译通常翻译出来的文本是没办法直接用的"
+                },
             ],
             tags:["android", "ios", "web", "python", "sql"]
         }

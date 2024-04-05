@@ -73,8 +73,12 @@ onMounted(() => {
 
 .summarys{
   display: flex;
-  flex-wrap: nowrap;
-  flex-direction: column;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: stretch;
+  align-content: flex-start;
+
   overflow-y: auto; /* 或 overflow: auto; 如果需要同时考虑水平和垂直滚动 */
   scrollbar-width: none; /* 针对Firefox等支持该属性的浏览器 */
   -ms-overflow-style: none; /* 针对IE/Edge */
@@ -92,6 +96,8 @@ onMounted(() => {
 .summary{
   display: flex;
   flex-direction: column;
+  min-width: 500px;
+  flex-grow: 1;
 }
 
 .tags{
