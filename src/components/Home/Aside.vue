@@ -7,7 +7,6 @@ import Search from "./Search.vue";
 <template>
   <aside class="aside-panel">
     <UserInfo/>
-    <Search/>
     <BtnList/>
   </aside>
 </template>

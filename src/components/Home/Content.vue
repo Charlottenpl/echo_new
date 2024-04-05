@@ -4,6 +4,7 @@ import Summary from "./Summary.vue";
 import Tags from "./Tags.vue";
 import Classification from "./Classification.vue";
 import {onMounted, ref} from "vue";
+import HomeNav from "./HomeNav.vue";
 const data = echoed()
 
 let blogs = data.test.blogs
@@ -22,15 +23,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="head_btn">
-    <div class="nav">
-      <div style="height: 50px; margin-right: 1%">
-        标签
-      </div>
-      <div style="height: 50px">
-        分类
-      </div>
-    </div>
+  <div class="content_main">
+    <HomeNav class="nav"/>
+
     <main style="display: flex; flex-direction: row; height: 90%; ">
       <div class="summarys" >
         <Summary class="summary" v-for="blog in blogs" :title="blog.title" :description="blog.description"/>
@@ -46,21 +41,14 @@ onMounted(() => {
 </template>
 
 <style scoped>
-.head_btn{
+.content_main{
   display: flex;
   flex-direction: column;
   padding-right: 10px;
 }
 
 .nav{
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: right;
-  align-items: center;
-  margin: 10px 10px 0 10px;
   height: 60px;
-  border-radius: 20px;
   margin-right: 5%;
 }
 

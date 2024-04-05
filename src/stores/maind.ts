@@ -5,9 +5,88 @@ export const echoed = defineStore('main_store', {
         userInfo: {
             img: "public/def.jpg" //https://images.cnblogs.com/cnblogs_com/charlottepl/1676587/o_210408083032QQ%E5%9B%BE%E7%89%8720210408162958.jpg
         },
-        test:{
+        navs: [
+            {
+                title: "首页",
+                img: ""
+            },
+            {
+                title: "时间轴",
+                img: ""
+            },
+            {
+                title: "标签",
+                img: ""
+            },
+            {
+                title: "分类",
+                img: ""
+            },
+            {
+                title: "友链",
+                img: ""
+            },
+
+        ],
+        test: {
             count: 0,
-            blogs:[
+            blogs: [
+                {
+                    title: "git - rebase 使用",
+                    description: "原理 一句话总结就是：把当前分支从搬到目标分支之上。 首先，执行rebase操作时会先找到当前分支和目标分支的最近共同commit。 然后记录下当前分支自这个共同commit以来的所有提交。 之后分别将记录中的commit应用到目标分支上，类似于cherry-pick。如果遇到冲突需要先解决冲突。"
+                },
+                {
+                    title: "iOS - Apple开发者账户添加新测试设备",
+                    description: "### 获取UUID 首先将设备连接XCode，打开Window -> Devices and Simulators，通过下方位置查看 ![](https://img2023.cnblogs.com/blog/1922094/202307/1922094-20230727105117556-9307"
+                },
+                {
+                    title: "INSTALL_FAILED_USER_RESTRICTED",
+                    description: "错误分析 某天早上调试app的时候突然就发现无法安装了，adb uninstall之后也没用。"
+                },
+                {
+                    title: "Android、iOS快速全球化工具",
+                    description: "在进行移动端全球化的时候，我们需要根据语言类型准备格式相同，文本不同的好多个文件，如果一个一个翻译显然很浪费时间，如果整篇复制到Google翻译通常翻译出来的文本是没办法直接用的"
+                },
+                {
+                    title: "git - rebase 使用",
+                    description: "原理 一句话总结就是：把当前分支从搬到目标分支之上。 首先，执行rebase操作时会先找到当前分支和目标分支的最近共同commit。 然后记录下当前分支自这个共同commit以来的所有提交。 之后分别将记录中的commit应用到目标分支上，类似于cherry-pick。如果遇到冲突需要先解决冲突。"
+                },
+                {
+                    title: "iOS - Apple开发者账户添加新测试设备",
+                    description: "### 获取UUID 首先将设备连接XCode，打开Window -> Devices and Simulators，通过下方位置查看 ![](https://img2023.cnblogs.com/blog/1922094/202307/1922094-20230727105117556-9307"
+                },
+                {
+                    title: "INSTALL_FAILED_USER_RESTRICTED",
+                    description: "错误分析 某天早上调试app的时候突然就发现无法安装了，adb uninstall之后也没用。"
+                },
+                {
+                    title: "Android、iOS快速全球化工具",
+                    description: "在进行移动端全球化的时候，我们需要根据语言类型准备格式相同，文本不同的好多个文件，如果一个一个翻译显然很浪费时间，如果整篇复制到Google翻译通常翻译出来的文本是没办法直接用的"
+                },
+                {
+                    title: "INSTALL_FAILED_USER_RESTRICTED",
+                    description: "错误分析 某天早上调试app的时候突然就发现无法安装了，adb uninstall之后也没用。"
+                },
+                {
+                    title: "Android、iOS快速全球化工具",
+                    description: "在进行移动端全球化的时候，我们需要根据语言类型准备格式相同，文本不同的好多个文件，如果一个一个翻译显然很浪费时间，如果整篇复制到Google翻译通常翻译出来的文本是没办法直接用的"
+                },
+                {
+                    title: "INSTALL_FAILED_USER_RESTRICTED",
+                    description: "错误分析 某天早上调试app的时候突然就发现无法安装了，adb uninstall之后也没用。"
+                },
+                {
+                    title: "Android、iOS快速全球化工具",
+                    description: "在进行移动端全球化的时候，我们需要根据语言类型准备格式相同，文本不同的好多个文件，如果一个一个翻译显然很浪费时间，如果整篇复制到Google翻译通常翻译出来的文本是没办法直接用的"
+                },
+                {
+                    title: "INSTALL_FAILED_USER_RESTRICTED",
+                    description: "错误分析 某天早上调试app的时候突然就发现无法安装了，adb uninstall之后也没用。"
+                },
+                {
+                    title: "Android、iOS快速全球化工具",
+                    description: "在进行移动端全球化的时候，我们需要根据语言类型准备格式相同，文本不同的好多个文件，如果一个一个翻译显然很浪费时间，如果整篇复制到Google翻译通常翻译出来的文本是没办法直接用的"
+                },
                 {
                     title: "git - rebase 使用",
                     description: "原理 一句话总结就是：把当前分支从搬到目标分支之上。 首先，执行rebase操作时会先找到当前分支和目标分支的最近共同commit。 然后记录下当前分支自这个共同commit以来的所有提交。 之后分别将记录中的commit应用到目标分支上，类似于cherry-pick。如果遇到冲突需要先解决冲突。"
@@ -65,7 +144,7 @@ export const echoed = defineStore('main_store', {
                     description: "在进行移动端全球化的时候，我们需要根据语言类型准备格式相同，文本不同的好多个文件，如果一个一个翻译显然很浪费时间，如果整篇复制到Google翻译通常翻译出来的文本是没办法直接用的"
                 },
             ],
-            tags:["android", "ios", "web", "python", "sql"]
+            tags: ["android", "ios", "web", "python", "sql"]
         }
     }),
     actions: {
