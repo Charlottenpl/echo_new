@@ -35,6 +35,7 @@ const data = echoed()
 }
 
 #tag_item{
+  cursor: pointer;
   text-align: left;
   font-size: small;
   margin: 5px;
@@ -43,6 +44,13 @@ const data = echoed()
   border-radius: 5px;
   border: 1px solid #d2d9e8;
 }
+
+#tag_item:hover{
+  color: #dfe8fc;
+  background: #747bff;
+  border: 1px solid #747bff;
+}
+
 
 /*---------------------------------------------- Dark Theme ----------------------------------------------------------*/
 

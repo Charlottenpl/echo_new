@@ -35,12 +35,19 @@ const data = echoed()
 }
 
 #tag_item {
+  cursor: pointer;
   font-size: small;
   margin: 5px;
   padding: 6px;
   color: #3a4359;
   border-radius: 5px;
   border: 1px solid #d2d9e8;
+}
+
+#tag_item:hover{
+  color: #dfe8fc;
+  background: #747bff;
+  border: 1px solid #747bff;
 }
 
 /*---------------------------------------------- Dark Theme ----------------------------------------------------------*/

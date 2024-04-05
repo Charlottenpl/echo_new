@@ -32,7 +32,7 @@ function show_blog(){
   margin: 10px;
   padding: 30px;
   align-items: flex-start;
-  background: #4f4f4f33;
+  background: #dce6fd;
   border-radius: 10px;
 }
 
@@ -78,7 +78,9 @@ function show_blog(){
 
 /* 深色主题 */
 @media (prefers-color-scheme: dark) {
-
+  .blog_box{
+    background: #4f4f4f33;
+  }
   .description{
     color: #a7a7a7 !important;
   }
