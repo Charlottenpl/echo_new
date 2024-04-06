@@ -5,26 +5,26 @@ export const echoed = defineStore('main_store', {
         userInfo: {
             img: "public/def.jpg" //https://images.cnblogs.com/cnblogs_com/charlottepl/1676587/o_210408083032QQ%E5%9B%BE%E7%89%8720210408162958.jpg
         },
-        navs: [
+        navs: [ //✅
             {
-                title: "首页",
-                img: ""
+                title: "🌈 首页",
+                id: "home"
             },
             {
-                title: "时间轴",
-                img: ""
+                title: "🥝 时间轴",
+                id: "timeline"
             },
             {
-                title: "标签",
-                img: ""
+                title: "✨ 标签",
+                id: "tags"
             },
             {
-                title: "分类",
-                img: ""
+                title: "😊 分类",
+                id: "class"
             },
             {
-                title: "友链",
-                img: ""
+                title: "🔥 友链",
+                id: "links"
             },
 
         ],
