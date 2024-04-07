@@ -1,16 +1,17 @@
 <script setup lang="ts">
 const item = defineProps<{
+  id: number,
   title: string,
-  description: number,
+  description: string,
 }>()
-function show_blog(){
+function show_blog(id: number){
   //todo 显示 alert
-  alert("show blog.")
+  alert(`show blog ${id}.`)
 }
 </script>
 
 <template>
-  <div :onclick="show_blog" class="blog_box">
+  <div @click="show_blog(item.id)" class="blog_box">
 
     <div class="box">
       <span class="title">{{title}}</span>

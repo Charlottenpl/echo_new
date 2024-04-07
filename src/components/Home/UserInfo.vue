@@ -29,7 +29,7 @@ const data = echoed()
 }
 
 .user_header {
-  margin: 20px 10px 20px 10px;
+  margin: 30px 10px 20px 10px;
   display: flex;
   align-items: center;
   justify-content: center;

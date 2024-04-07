@@ -28,7 +28,7 @@ onMounted(() => {
 
     <main style="display: flex; flex-direction: row; height: 90%; ">
       <div class="summarys" >
-        <Summary class="summary" v-for="blog in blogs" :title="blog.title" :description="blog.description"/>
+        <Summary class="summary" v-for="blog in blogs" :id="blog.id" :title="blog.title" :description="blog.description"/>
       </div>
 
       <div v-show="isModules" class="modules"> <!--tag、分类等模块-->

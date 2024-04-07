@@ -52,7 +52,7 @@ onMounted(() => {
 .aside-panel {
   position: relative; /* 必须设置定位属性 */
   z-index: 1; /* 设置一个较高的 z-index 值 */
-  flex: 0 0 250px; /* 固定左侧面板的宽度 */
+  flex: 0 0 280px; /* 固定左侧面板的宽度 */
   margin-right: 20px;
   /*box-shadow: 10px 0 15px -5px rgba(0, 0, 0, 0.15); !* 向右下方的阴影 *!*/
 }

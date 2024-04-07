@@ -14,15 +14,9 @@ function click_btn(item) {
 
 <template>
   <div class="nav_main">
-
-
-    <div  v-for="item in navs">
-      <div class="nav_item" :onclick="click_btn(item)">
-        {{ item.title }}
-      </div>
+    <div v-for="item in navs" class="nav_item" @click="click_btn(item)">
+      {{ item.title }}
     </div>
-
-
     <Search/>
   </div>
 </template>
