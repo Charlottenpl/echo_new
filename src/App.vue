@@ -34,6 +34,7 @@ onMounted(() => {
   width: 100vw; /* 使用视口宽度单位 */
   height: 100vh; /* 使用视口高度单位 */
   margin: 0; /* 移除默认的 margin */
+
   /*
   overflow: auto; !* 如果内容超出屏幕大小，允许滚动 *!
   */
@@ -41,11 +42,11 @@ onMounted(() => {
 
 .home{
   overflow:hidden; /*子view会遮挡div的圆角所以加上这个*/
-
+  float: left;
   border-radius: 6px; /* 为元素添加圆角，半径为 10px */
   display: inline-flex; /*水平排列*/
   flex-direction: row; /* 子元素将水平排列 */
-  width: 100%;
+  width: 95%;
   height: 100%;
 }
 

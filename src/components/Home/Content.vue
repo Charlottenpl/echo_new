@@ -57,12 +57,10 @@ function boxWidth() {
 .content_main {
   display: flex;
   flex-direction: column;
-  padding-right: 10px;
 }
 
 .nav {
   height: 60px;
-  margin-right: 5%;
 }
 
 .main-panel {
@@ -93,11 +91,9 @@ function boxWidth() {
 
   flex: 1;
   margin: 20px;
-  border: 1px dot-dash #d2d9e8;
 }
 
 .summary {
-  border: 1px dashed #d2d9e8;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -105,7 +101,7 @@ function boxWidth() {
 
 .tags {
   width: 230px;
-  margin: 10px;
+  margin: 10px 0 10px 10px;
   margin-bottom: 20px;
 }
 
@@ -114,6 +110,5 @@ function boxWidth() {
   flex-direction: column;
   flex: 0 0 auto;
   padding-top: 30px;
-  margin-right: 4%;
 }
 </style>
