@@ -8,6 +8,7 @@ function show_blog(id: number){
   //todo 显示 alert
   alert(`show blog ${id}.`)
 }
+
 </script>
 
 <template>
@@ -30,11 +31,10 @@ function show_blog(id: number){
   display: flex;
   flex-direction: row !important;
   flex-wrap: nowrap;
-  margin: 10px;
   padding: 30px;
   align-items: flex-start;
   background: #dce6fd;
-  border-radius: 10px;
+  min-width: 500px;
 }
 
 .box{
@@ -51,7 +51,6 @@ function show_blog(id: number){
   font-size: large;
   display: block;
   margin-bottom: 20px;
-  max-width: 550px;
 }
 
 .description{
@@ -59,7 +58,6 @@ function show_blog(id: number){
   line-height: 21px;
   word-break: break-all;
   font-size: medium;
-  max-width: 550px;
 }
 
 .info{

@@ -3,23 +3,35 @@ import {echoed} from "../../stores/maind";
 import Summary from "./Summary.vue";
 import Tags from "./Tags.vue";
 import Classification from "./Classification.vue";
-import {onMounted, ref} from "vue";
+import {onBeforeMount, onMounted, ref} from "vue";
 import HomeNav from "./HomeNav.vue";
+
 const data = echoed()
 
 let blogs = data.test.blogs
 
 const isModules = ref(true)
-
+const box_width = ref(500)
 
 onMounted(() => {
+
+  console.log("init")
   isModules.value = window.innerWidth > 1000
+  boxWidth()
 
   window.addEventListener('resize', () => {
     isModules.value = window.innerWidth > 1000
     console.log(isModules)
+    boxWidth()
   })
 })
+
+function boxWidth() {
+  let divWidth = document.getElementById("big_box").clientWidth;
+  let n = Math.floor(divWidth / 800)
+  box_width.value = divWidth / n -2 //需要减掉边框宽度不然会出bug（放不下会转到下一行）
+  console.log(divWidth + " n: " + n + " width: " + box_width.value)
+}
 </script>
 
 <template>
@@ -27,8 +39,9 @@ onMounted(() => {
     <HomeNav class="nav"/>
 
     <main style="display: flex; flex-direction: row; height: 90%; ">
-      <div class="summarys" >
-        <Summary class="summary" v-for="blog in blogs" :id="blog.id" :title="blog.title" :description="blog.description"/>
+      <div class="summarys" id="big_box">
+        <Summary class="summary" :style="{ width: box_width + 'px' }" v-for="blog in blogs" :id="blog.id"
+                 :title="blog.title" :description="blog.description"/>
       </div>
 
       <div v-show="isModules" class="modules"> <!--tag、分类等模块-->
@@ -41,13 +54,13 @@ onMounted(() => {
 </template>
 
 <style scoped>
-.content_main{
+.content_main {
   display: flex;
   flex-direction: column;
   padding-right: 10px;
 }
 
-.nav{
+.nav {
   height: 60px;
   margin-right: 5%;
 }
@@ -59,7 +72,7 @@ onMounted(() => {
   height: 100%;
 }
 
-.summarys{
+.summarys {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
@@ -72,29 +85,31 @@ onMounted(() => {
   -ms-overflow-style: none; /* 针对IE/Edge */
 
   /* Webkit内核浏览器（如Chrome、Safari）隐藏滚动条 */
+
   &::-webkit-scrollbar {
     width: 0; /* 隐藏水平滚动条 */
     height: 0; /* 隐藏垂直滚动条 */
   }
 
   flex: 1;
-  margin: 10px;
+  margin: 20px;
+  border: 1px dot-dash #d2d9e8;
 }
 
-.summary{
+.summary {
+  border: 1px dashed #d2d9e8;
   display: flex;
   flex-direction: column;
-  min-width: 500px;
   flex-grow: 1;
 }
 
-.tags{
+.tags {
   width: 230px;
   margin: 10px;
   margin-bottom: 20px;
 }
 
-.modules{
+.modules {
   display: flex;
   flex-direction: column;
   flex: 0 0 auto;

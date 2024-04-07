@@ -42,6 +42,9 @@ function click_btn(id: number) {
 
 /* 深色主题 */
 @media (prefers-color-scheme: dark) {
-
+  .btn_item:hover{
+    color: #1a1a1a;
+    background: #d2d9e8aa;
+  }
 }
 </style>
