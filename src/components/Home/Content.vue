@@ -16,11 +16,11 @@ const box_width = ref(500)
 onMounted(() => {
 
   console.log("init")
-  isModules.value = window.innerWidth > 1000
+  isModules.value = window.innerWidth > 1400
   boxWidth()
 
   window.addEventListener('resize', () => {
-    isModules.value = window.innerWidth > 1000
+    isModules.value = window.innerWidth > 1400
     console.log(isModules)
     boxWidth()
   })
@@ -58,11 +58,13 @@ function boxWidth() {
   display: flex;
   flex-direction: column;
   padding-right: 10px;
+  width: 920px;
 }
 
 .nav {
   height: 60px;
   margin-right: 5%;
+
 }
 
 .main-panel {
@@ -93,11 +95,10 @@ function boxWidth() {
 
   flex: 1;
   margin: 20px;
-  border: 1px dot-dash #d2d9e8;
 }
 
 .summary {
-  border: 1px dashed #d2d9e8;
+  border-bottom: 1px dashed #d2d9e8;
   display: flex;
   flex-direction: column;
   flex-grow: 1;

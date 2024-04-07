@@ -36,8 +36,8 @@ function click_btn(item) {
   cursor: pointer;
   padding: 5px 20px;
   border-radius: 20px;
-  margin-right: 1%;
   text-align: end;
+  font-size: medium;
 }
 
 .nav_item:hover {

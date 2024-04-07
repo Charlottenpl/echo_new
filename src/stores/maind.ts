@@ -39,7 +39,7 @@ export const echoed = defineStore('main_store', {
                 id: "timeline"
             },
             {
-                title: "✨ 图床",
+                title: "✨ 图册",
                 id: "tags"
             },
             {
