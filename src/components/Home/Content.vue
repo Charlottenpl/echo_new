@@ -105,7 +105,7 @@ function boxWidth() {
 }
 
 .tags {
-  width: 230px;
+  width: 160px;
   margin: 10px;
   margin-bottom: 20px;
 }
@@ -113,8 +113,6 @@ function boxWidth() {
 .modules {
   display: flex;
   flex-direction: column;
-  flex: 0 0 auto;
   padding-top: 30px;
-  margin-right: 4%;
 }
 </style>

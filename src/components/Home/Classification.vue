@@ -43,6 +43,7 @@ const data = echoed()
   color: #3a4359;
   border-radius: 5px;
   border: 1px solid #d2d9e8;
+  width: 150px;
 }
 
 #tag_item:hover{

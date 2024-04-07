@@ -28,6 +28,7 @@ function show_blog(id: number){
 <style scoped>
 .blog_box{
   cursor: pointer;
+
   display: flex;
   flex-direction: row !important;
   flex-wrap: nowrap;
