@@ -1,13 +1,9 @@
 <script setup lang="ts">
-import {echoed} from "../../stores/maind";
-
-const data = echoed()
-
 </script>
 
 <template>
   <div class="user_header">
-    <img class="user_img" :src="data.userInfo.img" alt="头像"/>
+    <img class="user_img" src="/def.jpg" alt="头像"/>
 
     <div style="display: inline-block;height: 40px; text-align: left">
       <div class="name">

@@ -6,7 +6,8 @@ const item = defineProps<{
 }>()
 function show_blog(id: number){
   //todo 显示 alert
-  alert(`show blog ${id}.`)
+  console.log("show blog: "+id)
+  // alert(`show blog ${id}.`)
 }
 
 </script>

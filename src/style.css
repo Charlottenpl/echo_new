@@ -1,5 +1,5 @@
 :root {
-    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    font-family:  'ContentFont', Microsoft YaHei, Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
     line-height: 1.5;
     font-weight: 400;
 
@@ -96,7 +96,14 @@ button:focus-visible {
 
 @font-face {
     font-family: 'TitleFont';
-    src: url('./assets/font/Averna.ttf') format('woff2');
+    src: url('./assets/font/Averna.ttf') format('TrueType');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'ContentFont';
+    src: url('./assets/font/Roboto-Light.ttf') format('TrueType');
     font-weight: normal;
     font-style: normal;
 }

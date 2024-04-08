@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import Aside from "./components/Home/Aside.vue";
-import Content from "./components/Home/Content.vue";
 import {ref, onMounted} from 'vue';
 import HomeNav from "./components/Home/HomeNav.vue";
+
+
 
 const isAsideVisible = ref(true)
 
@@ -79,7 +80,7 @@ onMounted(() => {
 }
 
 .content-view{
-  flex: 1;
+  overflow: auto;
 }
 
 /*---------------------------------------------- Dark Theme ----------------------------------------------------------*/

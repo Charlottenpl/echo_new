@@ -5,7 +5,7 @@ const data = echoed()
 
 let btns = data.btns
 
-function click_btn(id: number) {
+function click_btn(id: string) {
   alert("click"+id)
 }
 </script>

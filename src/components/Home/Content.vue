@@ -3,8 +3,7 @@ import {echoed} from "../../stores/maind";
 import Summary from "./Summary.vue";
 import Tags from "./Tags.vue";
 import Classification from "./Classification.vue";
-import {onBeforeMount, onMounted, ref} from "vue";
-import HomeNav from "./HomeNav.vue";
+import {onMounted, ref} from "vue";
 
 const data = echoed()
 
@@ -27,7 +26,7 @@ onMounted(() => {
 })
 
 function boxWidth() {
-  let divWidth = document.getElementById("big_box").clientWidth;
+  let divWidth = document.getElementById("big_box")!.clientWidth;
   let n = Math.floor(divWidth / 800)
   box_width.value = divWidth / n -2 //需要减掉边框宽度不然会出bug（放不下会转到下一行）
   console.log(divWidth + " n: " + n + " width: " + box_width.value)
@@ -38,7 +37,7 @@ function boxWidth() {
   <div class="content_main">
 
 
-    <main style="display: flex; flex-direction: row; height: 90%; ">
+    <main style="display: flex; flex-direction: row; height: 100%; ">
       <div class="summarys" id="big_box">
         <Summary class="summary" :style="{ width: box_width + 'px' }" v-for="blog in blogs" :id="blog.id"
                  :title="blog.title" :description="blog.description"/>

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import UserInfo from "./UserInfo.vue";
-import Search from "./Search.vue";
 import BtnList from "./BtnList.vue";
 
 </script>

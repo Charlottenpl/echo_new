@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import {echoed} from "../../stores/maind.ts";
-import Search from "./Search.vue";
 
 const data = echoed()
 let navs = data.navs
 
-function click_btn(item) {
+function click_btn(item: any) {
   console.log(item.title)
-  alert(item.title)
+  // alert(item.title)
 }
 
 </script>
