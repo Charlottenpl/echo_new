@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {echoed} from "../../stores/maind.ts";
+import {echoed} from "../../stores/maind";
 
 const data = echoed()
 let navs = data.navs

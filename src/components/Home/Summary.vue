@@ -21,7 +21,10 @@ function show_blog(id: number){
         <span class="info">发表于 2022-03-14 02:20阅读：68评论：0推荐：0</span>
       </div>
 
-      <img src="../../assets/bg3.jpg" class="blog_img"/>
+      <div class="blog_img_box">
+        <img src="../../assets/bg3.jpg" class="blog_img"/>
+      </div>
+
     </div>
 
 
@@ -43,7 +46,6 @@ function show_blog(id: number){
 }
 
 .blog_box:hover{
-  //box-shadow: #fff 0 0 20px;
   border: 1px solid #d2d9e8;
 }
 
@@ -81,6 +83,14 @@ function show_blog(id: number){
 }
 
 .blog_img{
+  flex: 4 0 0;
+  border-radius: 10px;
+  height: 100%;
+  max-width: 100%;
+  object-fit: cover;
+}
+
+.blog_img_box{
   flex: 4 0 0;
   border-radius: 10px;
   height: 100%;
