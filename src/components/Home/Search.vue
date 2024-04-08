@@ -4,11 +4,14 @@
 
 <template>
   <div class="search_box">
-    <img src=""/>search...
+    <input class="search_input"/>
+    <button class="search_btn" type="submit" style="background: none"/>
   </div>
 </template>
 
 <style scoped>
+
+
 .search_box{
   width: 200px;
   height: 30px;

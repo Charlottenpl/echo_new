@@ -2,6 +2,7 @@
 import Aside from "./components/Home/Aside.vue";
 import Content from "./components/Home/Content.vue";
 import {ref, onMounted} from 'vue';
+import HomeNav from "./components/Home/HomeNav.vue";
 
 const isAsideVisible = ref(true)
 
@@ -21,7 +22,14 @@ onMounted(() => {
   <div class="home-container">
     <div class="home">
       <Aside class="aside-panel" v-show="isAsideVisible"/>
-      <Content class="content-panel"/>
+
+      <div class="content-panel">
+        <HomeNav class="nav"/>
+        <!--路由页面-->
+        <router-view class="content-view"/>
+      </div>
+
+<!--      <Content class="content-panel"/>-->
     </div>
   </div>
 </template>
@@ -50,6 +58,11 @@ onMounted(() => {
   height: 100%;
 }
 
+.nav {
+  height: 30px;
+  margin-top: 20px;
+}
+
 .aside-panel {
   position: relative; /* 必须设置定位属性 */
   z-index: 1; /* 设置一个较高的 z-index 值 */
@@ -59,9 +72,14 @@ onMounted(() => {
 }
 
 .content-panel {
-  position: relative; /* 必须设置定位属性 */
-  z-index: 0; /* 设置一个较低的 z-index 值，确保它在元素-with-shadow 下方 */
+  display: flex;
+  flex-direction: column;
+
   flex: 1; /* 占据剩余空间 */
+}
+
+.content-view{
+  flex: 1;
 }
 
 /*---------------------------------------------- Dark Theme ----------------------------------------------------------*/

@@ -36,7 +36,7 @@ function boxWidth() {
 
 <template>
   <div class="content_main">
-    <HomeNav class="nav"/>
+
 
     <main style="display: flex; flex-direction: row; height: 90%; ">
       <div class="summarys" id="big_box">
@@ -59,9 +59,7 @@ function boxWidth() {
   flex-direction: column;
 }
 
-.nav {
-  height: 60px;
-}
+
 
 .main-panel {
   /* 其他样式 */

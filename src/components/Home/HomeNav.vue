@@ -15,9 +15,9 @@ function click_btn(item) {
 <template>
   <div class="nav_main">
     <div v-for="item in navs" class="nav_item" @click="click_btn(item)">
-      {{ item.title }}
+      <router-link :to="item.url" style="color: #efefef">{{ item.title }}</router-link>
     </div>
-    <Search/>
+<!--    <Search/>-->
   </div>
 </template>
 

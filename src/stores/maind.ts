@@ -8,30 +8,45 @@ export const echoed = defineStore('main_store', {
         navs: [ //✅
             {
                 title: "🌈 首页",
-                id: "home"
+                id: "home",
+                url: "/"
+            },
+            {
+                title: "🦄 博客",
+                id: "blog",
+                url: "/content"
             },
             {
                 title: "🥝 时间轴",
-                id: "timeline"
+                id: "timeline",
+                url: "/"
             },
             {
-                title: "✨ 标签",
-                id: "tags"
+                title: "✨ 搜索",
+                id: "search",
+                url: "/search"
             },
             {
                 title: "😊 分类",
-                id: "class"
+                id: "class",
+                url: "/"
+            },
+            {
+                title: "📆 归档",
+                id: "links",
+                url: "/"
             },
             {
                 title: "🔥 友链",
-                id: "links"
+                id: "links",
+                url: "/"
             },
 
         ],
 
         btns: [ //✅
             {
-                title: "🔥 推荐",
+                title: "🔥 置顶文章",
                 id: "home"
             },
             {
@@ -39,15 +54,15 @@ export const echoed = defineStore('main_store', {
                 id: "timeline"
             },
             {
-                title: "✨ 图床",
+                title: "✨ 图床相册",
                 id: "tags"
             },
             {
-                title: "😊 随记",
+                title: "😊 Book",
                 id: "class"
             },
             {
-                title: "🦄 关于",
+                title: "🦄 关于作者",
                 id: "links"
             },
 
