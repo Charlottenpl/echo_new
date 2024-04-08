@@ -3,9 +3,7 @@
 </script>
 
 <template>
-<div>
-  HOME!!!
-</div>
+welcome!!!!
 </template>
 
 <style scoped>

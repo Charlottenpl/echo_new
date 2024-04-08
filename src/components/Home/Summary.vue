@@ -1,12 +1,18 @@
 <script setup lang="ts">
+import {useRouter} from "vue-router";
+
 const item = defineProps<{
   id: number,
   title: string,
   description: string,
 }>()
+
+const route = useRouter()
 function show_blog(id: number){
   //todo 显示 alert
   console.log("show blog: "+id)
+  route.push(`/blog/`+id);
+
   // alert(`show blog ${id}.`)
 }
 
