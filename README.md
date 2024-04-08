@@ -11,6 +11,8 @@
 
 https://juejin.cn/post/6965488051695353886
 
+webp压缩软件：https://tinify.cn/
+
 ### 后端
 1. 数据库搭建
 2. blog CRUD
