@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <router-view/>
+  <router-view style="width: 100vw; height: 100vh"/>
 </template>
 
 <style scoped>

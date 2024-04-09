@@ -14,7 +14,7 @@ function click_btn(item: any) {
 <template>
   <div class="nav_main">
     <div v-for="item in navs" class="nav_item" @click="click_btn(item)">
-      <router-link :to="item.url" style="color: #efefef">{{ item.title }}</router-link>
+      <router-link :to="item.url" class="nav-item-route">{{ item.title }}</router-link>
     </div>
 <!--    <Search/>-->
   </div>
@@ -39,6 +39,10 @@ function click_btn(item: any) {
   text-align: end;
 }
 
+.nav-item-route{
+  color: #1a1a1a;
+}
+
 .nav_item:hover {
   background: #d2d9e899;
 }
@@ -47,6 +51,10 @@ function click_btn(item: any) {
 
 /* 深色主题 */
 @media (prefers-color-scheme: dark) {
+  .nav-item-route{
+    color: #efefef;
+  }
+
   .nav_item:hover {
     background: #d2d9e833;
   }

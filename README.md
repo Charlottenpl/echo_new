@@ -8,10 +8,18 @@
 5. blog编辑页面（milkdown）
 6. 提交热力图
 7. 自定义英文字体：Robot √
+8. 友链 fushaolei.fun
+9. 路由卫士区分浏览页面和编辑页面
+
 
 https://juejin.cn/post/6965488051695353886
 
 webp压缩软件：https://tinify.cn/
+
+技术参考文档：https://soft.moe/kun-visualnovel-docs/v1/overview/tech-stack
+
+
+
 
 ### 后端
 1. 数据库搭建

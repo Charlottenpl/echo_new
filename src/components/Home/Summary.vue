@@ -92,7 +92,7 @@ function show_blog(id: number){
   flex: 4 0 0;
   border-radius: 10px;
   height: 100%;
-  max-width: 100%;
+  width: 100%;
   object-fit: cover;
 }
 
@@ -101,7 +101,6 @@ function show_blog(id: number){
   border-radius: 10px;
   height: 100%;
   max-width: 100%;
-  object-fit: cover;
 }
 
 .blog_box:hover img{
