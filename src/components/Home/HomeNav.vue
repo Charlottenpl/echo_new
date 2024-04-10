@@ -39,6 +39,10 @@ function click_btn(item: any) {
   text-align: end;
 }
 
+.nav_item a{
+  text-decoration: none;
+}
+
 .nav-item-route{
   color: #1a1a1a;
 }
