@@ -24,7 +24,7 @@ onMounted(() => {
     // 编辑器中默认展示的文本
     value:content.value,
     // 设置编辑器的宽高
-    height: '100%',
+    height: '95%',
     width: '50%',
     // 设置工具栏中展示的工具
     toolbar: ['emoji', 'br', 'bold', '|', 'line','quote','list','check'],
