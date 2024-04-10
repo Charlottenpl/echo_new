@@ -24,20 +24,17 @@
     "@milkdown/utils": "^7.3.3",
     "@milkdown/vue": "^7.3.3",
     "@prosemirror-adapter/vue": "^0.2.6",
-    "refractor": "^4.8.1",
-
-
-
     "pinia": "^2.1.7",
+    "refractor": "^4.8.1",
+    "vditor": "^3.10.3",
     "vue": "^3.4.21",
     "vue-router": "4"
   },
   "devDependencies": {
     "@iconify/vue": "^4.1.1",
     "@types/node": "^20.10.0",
-    "sass": "^1.69.5",
-
     "@vitejs/plugin-vue": "^5.0.4",
+    "sass": "^1.69.5",
     "typescript": "^5.2.2",
     "vite": "^5.2.0",
     "vue-tsc": "^2.0.6"
