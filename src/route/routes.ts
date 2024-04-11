@@ -24,8 +24,12 @@ const routes = [
         ]
     },
     {
+        path: "/edit/:id",
+        component:()=>import('../components/Blog/BlogEdit.vue'),
+    },
+    {
         path: "/blog/:id",
-        component:()=>import('../components/BlogView/BlogView.vue'),
+        component:()=>import('../components/Blog/BlogView.vue'),
     },
 ]
 // 3. 创建路由实例并传递 `routes` 配置
