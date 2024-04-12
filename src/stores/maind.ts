@@ -68,6 +68,17 @@ export const echoed = defineStore('main_store', {
 
         ],
 
+        blog_edit_btns: [
+            {
+                click: "save",
+                title: "💾 保存文件",
+            },
+            {
+                click: "change_theme",
+                title: "🫧 更换主题",
+            },
+        ],
+
         test: {
             count: 0,
             blogs: [

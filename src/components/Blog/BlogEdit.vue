@@ -2,9 +2,11 @@
 
 import {onBeforeMount, onMounted, ref} from "vue";
 import {useRoute} from "vue-router";
-const content = ref<string>("请在此处输入文本");
+const content = ref<string>("");
 const route = useRoute()
 const id = ref('')
+const data = echoed()
+const btns = data.blog_edit_btns
 
 onBeforeMount(()=>{
   id.value = <string>route.params.articleId;
@@ -14,7 +16,12 @@ onBeforeMount(()=>{
 import Vditor from 'vditor'
 // 1.2 引入样式
 import 'vditor/dist/index.css';
+import {echoed} from "../../stores/maind";
+import net from "../../api/net.ts";
 
+const cdn = "https://unpkg.com/vditor@3.10.3/dist/css/content-theme/" //https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/ or https://unpkg.com/vditor@3.10.3/dist/css/content-theme
+
+const hljs_theme = "dracula" //
 // 2. 获取DOM引用
 const vditor = ref()
 
@@ -44,13 +51,14 @@ onMounted(() => {
         //自定义主题的话应该是把path改成自己的url，然后list写url下面有哪些css主题文件，然后current写当前使用的主题是哪个
         current: "dark",
         list: {"ant-design": "Ant Design", "dark": "Dark", "light": "Light", "wechat": "WeChat"},
-        path: "https://unpkg.com/vditor@3.10.3/dist/css/content-theme"
+        path: cdn
       },
       hljs:{
         enable: true,
         lineNumber: true,
-        style: "api", //代码风格：https://xyproto.github.io/splash/docs/longer/all.html
+        style: hljs_theme, //代码风格：https://xyproto.github.io/splash/docs/longer/all.html
       },
+      actions: ["desktop"]
     },
     icon:"ant",
     comment:{
@@ -72,7 +80,7 @@ onMounted(() => {
     // 编辑器失去焦点后的回调函数
     blur(value){
       // 保存文档....
-      save(value)
+      on_save(value)
     }
   })
 
@@ -81,37 +89,57 @@ onMounted(() => {
 })
 
 
-function save(md: string) {
+function on_save(md: string) {
   content.value = md
   console.log('保存成功: '+content.value)
 }
 
-function saveFile() {
+var save = function save() {
   // let it = vditor.value as Vditor
   // it.disabled()
   content.value = vditor.value.getValue()
   console.log(content.value)
 }
 
-function changeTheme() {
+var change_theme = function() {
   isDark.value = !isDark.value;
   vditor.value.setTheme(
       isDark.value? "dark":"classic",
       isDark.value? "dark":"wechat",
-      isDark.value? "github-dark":"github");
+      isDark.value? "dracula":"github");
+}
+
+function handleClick(action: string) {
+  const fun = eval(action);
+  new fun()
+
+  net({
+    url:"/list",
+    method:"get"
+  }).then((res)=>{
+    alert(res)
+  })
+
+  net.post(
+      "/list",
+      {
+
+      },
+      {
+
+      }).then((res)=>{
+        
+  })
 }
 
 </script>
 
 <template>
   <div class="editor_box">
-    <div style="width: 90%;height: 40px;line-height: 30px;padding-top: 5px;padding-bottom: 5px;margin: 0 auto;">
-      <a style="text-decoration: none;cursor: pointer" @click="saveFile">
-        <span>✨保存文档</span>
-      </a>
-      <a style="text-decoration: none;cursor: pointer" @click="changeTheme">
-        <span>🌈更换主题</span>
-      </a>
+    <div class="editor_navs">
+      <div class="editor_nav_item" v-for="item in btns" @click="handleClick(item.click)">
+        <span>{{item.title}}</span>
+      </div>
     </div>
     <div id="vditor"></div>
   </div>
@@ -127,4 +155,27 @@ function changeTheme() {
   align-items: center;
 }
 
+.editor_navs{
+  width: 70%;
+  height: 40px;
+  line-height: 30px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+}
+
+.editor_nav_item{
+  text-decoration: none;
+  cursor: pointer;
+  margin-left: 20px;
+  margin-right: 5px;
+  display: inline-block;
+}
+
+.editor_nav_item:hover{
+  color: #747bff;
+}
 </style>
