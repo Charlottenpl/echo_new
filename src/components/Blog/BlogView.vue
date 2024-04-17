@@ -22,6 +22,11 @@ onMounted(() => {
         list: {"ant-design": "Ant Design", "dark": "Dark", "light": "Light", "wechat": "WeChat"},
         path: "https://unpkg.com/vditor@3.10.3/dist/css/content-theme"
       },
+      hljs:{
+        enable: true,
+        lineNumber: true,
+        style: "dracula", //代码风格：https://xyproto.github.io/splash/docs/longer/all.html
+      },
       after() {
         if (window.innerWidth <= 768) {
           return
@@ -118,6 +123,10 @@ const initOutline = () => {
   padding: 10px;
   max-width: 900px;
   word-break: break-all;
+}
+
+#markdown-preview::-webkit-scrollbar {
+  display: none;
 }
 
 
