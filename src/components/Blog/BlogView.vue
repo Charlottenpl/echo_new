@@ -89,7 +89,7 @@ const initOutline = () => {
 
   <div class="blog-detail">
     <div id="markdown-toc">
-      <a id="markdown-toc_tmp_item" class="toc_link_a">tmo</a>
+      <a id="markdown-toc_tmp_item" class="toc_link_a"> 目录</a>
     </div>
     <div id="markdown-preview"></div>
   </div>

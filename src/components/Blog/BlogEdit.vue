@@ -109,6 +109,11 @@ var change_theme = function() {
       isDark.value? "dracula":"github");
 }
 
+if (false){
+  save()
+  change_theme()
+}
+
 function handleClick(action: string) {
   const fun = eval(action);
   new fun()
@@ -127,7 +132,7 @@ function handleClick(action: string) {
       },
       {
 
-      }).then((res)=>{
+      }).then((_)=>{
         
   })
 }
