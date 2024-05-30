@@ -72,7 +72,12 @@ const initOutline = () => {
 
 
       if (item.textContent){
-        link.textContent = item.textContent.slice(0, 10)
+        if (item.textContent.length > 15){
+          link.textContent = item.textContent.slice(0, 15) + "..."
+        }else{
+          link.textContent = item.textContent
+        }
+
       }else{
         link.textContent = "undefind"
       }
@@ -86,30 +91,41 @@ const initOutline = () => {
 
 
 <template>
+<div style="display: flex; flex-direction: column; align-items: center;height: 100%">
+
+  <div style="flex: 0 0 30px">jl;sdkfj</div>
 
   <div class="blog-detail">
+    <div id="markdown-preview"></div>
+
     <div id="markdown-toc">
       <a id="markdown-toc_tmp_item" class="toc_link_a"> 目录</a>
     </div>
-    <div id="markdown-preview"></div>
   </div>
+
+</div>
 </template>
 
 <style scoped>
 
 .blog-detail {
+  box-sizing: border-box; /* 即使元素有内边距，它的总宽度也不会超过设定的宽度(仅父组件100%，且设置padding有用) */
+  justify-content: center;
   display: flex;
+  flex: 1;
   flex-direction: row;
-  padding: 20px;
-  max-width: 1300px;
+  max-width: 1000px;
   width: 80vw;
-  height: 100vh;
+  position: relative; /* 为markdown-toc的绝对定位提供上下文 */
 }
 
 #markdown-toc {
-  flex: 0 0 230px;
+  width: 230px;
   display: flex;
   flex-direction: column;
+  position: absolute; /* 使用绝对定位使其脱离文档流 */
+  right: -230px; /* 置于右侧 */
+  top:60px;
 }
 
 /* !!!! v-deep渗透,告诉 Vue 忽略样式作用域的限制，允许接下来的选择器影响到子组件    */
@@ -119,8 +135,9 @@ const initOutline = () => {
 }
 
 #markdown-preview {
-  flex: 1 0 0;
-  padding: 10px;
+  box-sizing: border-box; /* 即使元素有内边距，它的总宽度也不会超过设定的宽度(仅父组件100%，且设置padding有用) */
+  background: #222122FF;
+  padding: 10px 40px;
   max-width: 900px;
   word-break: break-all;
 }
@@ -130,13 +147,21 @@ const initOutline = () => {
 }
 
 
+::-webkit-scrollbar {
+  width: 0 !important;
+}
+::-webkit-scrollbar {
+  width: 0 !important;height: 0;
+}
+
+
 /*---------------------------------------------- Dark Theme ----------------------------------------------------------*/
 
 /* 深色主题 */
 @media (prefers-color-scheme: dark) {
   /* !!!! v-deep渗透,告诉 Vue 忽略样式作用域的限制，允许接下来的选择器影响到子组件    */
   :deep(.toc_link_a){
-    color: #a3a3a3;
+    color: #d2d7e3;
   }
 }
 </style>

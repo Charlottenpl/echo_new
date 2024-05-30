@@ -6,6 +6,14 @@ let navs = data.navs
 
 function click_btn(item: any) {
   console.log(item.title)
+  var id = item.id;
+  switch (id) {
+    case "theme":
+      click_theme()
+      break;
+    case "link":
+      break;
+  }
   // alert(item.title)
 }
 
@@ -19,10 +27,6 @@ function click_theme(){
   <div class="nav_main">
     <div v-for="item in navs" class="nav_item" @click="click_btn(item)">
       <router-link :to="item.url" class="nav-item-route">{{ item.title }}</router-link>
-    </div>
-
-    <div class="nav_item" @click="click_theme">
-      🌖
     </div>
 <!--    <Search/>-->
   </div>

@@ -89,7 +89,7 @@ onMounted(() => {
 @media (prefers-color-scheme: dark) {
   .home-container {
     /*background: linear-gradient(to top, rgb(19, 19, 27), rgb(19, 19, 27), rgb(40, 48, 75), rgb(56, 69, 112)); /*好网站：https://hypercolor.dev!*/
-    background: #00000000;
+    background: #1C1B1BFF;
   }
 }
 </style>
