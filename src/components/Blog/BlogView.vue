@@ -22,7 +22,7 @@ onMounted(() => {
         list: {"ant-design": "Ant Design", "dark": "Dark", "light": "Light", "wechat": "WeChat"},
         path: "https://unpkg.com/vditor@3.10.3/dist/css/content-theme"
       },
-      hljs:{
+      hljs: {
         enable: true,
         lineNumber: true,
         style: "dracula", //代码风格：https://xyproto.github.io/splash/docs/longer/all.html
@@ -49,7 +49,7 @@ const initOutline = () => {
       headingElements.push(item)
       console.log(item.textContent)
       //设置id
-      item.id = "toc-link"+ count
+      item.id = "toc-link" + count
       count++
       // 创建一个新的 <a> 标签
       var link = document.createElement('a');
@@ -57,7 +57,7 @@ const initOutline = () => {
       // link.setAttribute("style", "cursor: pointer")
 
       // 为每个目录项添加点击事件监听器
-      link.addEventListener('click', function(event) {
+      link.addEventListener('click', function (event) {
         // 阻止链接默认的导航行为
         event.preventDefault();
 
@@ -65,20 +65,18 @@ const initOutline = () => {
         const preView = document.getElementById('markdown-preview');
         const targetElement = document.getElementById(item.id);
 
-        preView!.scrollTop = targetElement!.offsetTop -20;
+        preView!.scrollTop = targetElement!.offsetTop - 40;
       });
 
 
-
-
-      if (item.textContent){
-        if (item.textContent.length > 15){
+      if (item.textContent) {
+        if (item.textContent.length > 15) {
           link.textContent = item.textContent.slice(0, 15) + "..."
-        }else{
+        } else {
           link.textContent = item.textContent
         }
 
-      }else{
+      } else {
         link.textContent = "undefind"
       }
 
@@ -91,22 +89,38 @@ const initOutline = () => {
 
 
 <template>
-<div style="display: flex; flex-direction: column; align-items: center;height: 100%">
+  <div class="main_view">
 
-  <div style="flex: 0 0 30px">jl;sdkfj</div>
+    <div id="nav">jl;sdkfj</div>
 
-  <div class="blog-detail">
-    <div id="markdown-preview"></div>
+    <div class="blog-detail">
+      <div id="markdown-preview"></div>
 
-    <div id="markdown-toc">
-      <a id="markdown-toc_tmp_item" class="toc_link_a"> 目录</a>
+      <div id="markdown-toc">
+        <a id="markdown-toc_tmp_item" class="toc_link_a"> 目录</a>
+      </div>
     </div>
-  </div>
 
-</div>
+  </div>
 </template>
 
 <style scoped>
+.main_view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+
+#nav{
+  flex: 0 0 30px;
+  width: 100%;
+  background: #2f363d;
+  text-align: center;
+  position: sticky;
+  z-index: 999;
+  top: 0px;
+}
 
 .blog-detail {
   box-sizing: border-box; /* 即使元素有内边距，它的总宽度也不会超过设定的宽度(仅父组件100%，且设置padding有用) */
@@ -116,20 +130,18 @@ const initOutline = () => {
   flex-direction: row;
   max-width: 1000px;
   width: 80vw;
-  position: relative; /* 为markdown-toc的绝对定位提供上下文 */
 }
 
 #markdown-toc {
   width: 230px;
   display: flex;
   flex-direction: column;
-  position: absolute; /* 使用绝对定位使其脱离文档流 */
-  right: -230px; /* 置于右侧 */
-  top:60px;
+  position: sticky;
+  top: 10px;
 }
 
 /* !!!! v-deep渗透,告诉 Vue 忽略样式作用域的限制，允许接下来的选择器影响到子组件    */
-:deep(.toc_link_a){
+:deep(.toc_link_a) {
   color: #3b3b3b;
   cursor: pointer !important;
 }
@@ -139,6 +151,7 @@ const initOutline = () => {
   background: #222122FF;
   padding: 10px 40px;
   max-width: 900px;
+  height: 97vh;
   word-break: break-all;
 }
 
@@ -150,8 +163,10 @@ const initOutline = () => {
 ::-webkit-scrollbar {
   width: 0 !important;
 }
+
 ::-webkit-scrollbar {
-  width: 0 !important;height: 0;
+  width: 0 !important;
+  height: 0;
 }
 
 
@@ -160,7 +175,7 @@ const initOutline = () => {
 /* 深色主题 */
 @media (prefers-color-scheme: dark) {
   /* !!!! v-deep渗透,告诉 Vue 忽略样式作用域的限制，允许接下来的选择器影响到子组件    */
-  :deep(.toc_link_a){
+  :deep(.toc_link_a) {
     color: #d2d7e3;
   }
 }
