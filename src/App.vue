@@ -3,8 +3,11 @@
 </script>
 
 <template>
-  <router-view style="width: 100vw; height: 100vh"/>
+  <router-view class="app_view"/>
 </template>
 
 <style scoped>
+.app_view {
+  width: 100%; height: 100%;
+}
 </style>

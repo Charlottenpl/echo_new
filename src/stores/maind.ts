@@ -33,12 +33,17 @@ export const echoed = defineStore('main_store', {
             },
             {
                 title: "📆 归档",
-                id: "links",
+                id: "archive",
                 url: "/"
             },
             {
                 title: "🔥 友链",
                 id: "links",
+                url: "/"
+            },
+            {
+                title: "🌖",
+                id: "theme",
                 url: "/"
             },
 

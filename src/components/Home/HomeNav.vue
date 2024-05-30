@@ -6,7 +6,19 @@ let navs = data.navs
 
 function click_btn(item: any) {
   console.log(item.title)
+  var id = item.id;
+  switch (id) {
+    case "theme":
+      click_theme()
+      break;
+    case "link":
+      break;
+  }
   // alert(item.title)
+}
+
+function click_theme(){
+  console.log("change theme mode")
 }
 
 </script>
