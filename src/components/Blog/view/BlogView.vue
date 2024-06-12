@@ -103,52 +103,61 @@ const initOutline = () => {
   <div class="main_view">
 <!--    博客标题-->
     <BlogTitle id="nav"></BlogTitle>
+    <!--      目录-->
+    <div id="markdown-toc">
+      <a id="markdown-toc_tmp_item" class="toc_link_a"> 目录</a>
+    </div>
 <!--    博客详情-->
     <div class="blog-detail">
 <!--      文章内容-->
       <div id="markdown-preview"></div>
 
-<!--      目录-->
-      <div id="markdown-toc">
-        <a id="markdown-toc_tmp_item" class="toc_link_a"> 目录</a>
-      </div>
     </div>
 
   </div>
 </template>
 
 <style scoped>
+/**
+  position定位
+  1. static: 简单的文档流，默认就是这个
+  2. relative: 相对定位，相对与原本位置，不脱离文档流
+  3. absolute: 绝对定位，相对于除static以外的第一个父元素进行定位，脱离文档流
+  4. fixed: 相对于浏览器窗口位置固定，比如Top按钮
+  5. sticky: 粘性布局，当处于窗口中时时relative属性，当滑动到快消失时是fixed
+
+ */
 .main_view {
-  display: flex;
-  flex-direction: column; /* 布局方向为列 */
-  align-items: center; /* 定义项目在交叉轴上的对齐方式为居中对齐 */
+  width: 100vw;
+  padding: 0px;
+  padding-top: 60px;
+  margin: 0px;
+  position: relative;
 }
 
+.main_view::-webkit-scrollbar {
+  display: none;  /* Safari and Chrome */
+}
+
+
 #nav{
-  flex: 0 0 30px;
+  position: fixed;
+  height: 50px;
   width: 100%;
   background: #2f363d;
   text-align: center;
-  position: sticky;
   z-index: 999;
   top: 0px;
 }
 
 .blog-detail {
-  justify-content: center; /* 内容水平居中对齐 */
-  display: flex;
-  flex: 1; /* 占满可用空间 */
-  flex-direction: row; /* 布局方向为行 */
-  max-width: 1200px;
-  width: 80vw;
+
 }
 
 #markdown-toc {
   width: 230px;
-  display: flex;
-  flex-direction: column;
   position: sticky;
-  top: 10px;
+  top: 250px;
 }
 
 /* !!!! v-deep渗透,告诉 Vue 忽略样式作用域的限制，允许接下来的选择器影响到子组件    */
@@ -167,16 +176,6 @@ const initOutline = () => {
 
 #markdown-preview::-webkit-scrollbar {
   display: none;
-}
-
-
-::-webkit-scrollbar {
-  width: 0 !important;
-}
-
-::-webkit-scrollbar {
-  width: 0 !important;
-  height: 0;
 }
 
 
