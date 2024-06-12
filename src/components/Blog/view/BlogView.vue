@@ -3,6 +3,7 @@ import 'vditor/dist/method.min'
 import {onMounted} from "vue";
 import Vditor from "vditor";
 import "vditor/src/assets/less/index.less"
+import BlogTitle from "./BlogTitle.vue";
 
 onMounted(() => {
   fetch("/2404.md").then(
@@ -89,13 +90,25 @@ const initOutline = () => {
 
 
 <template>
+<!--
+  视图结构
+  main：父视图，使用flex布局，并且方向为竖向
+  nav： 包含标题导航栏等信息，使用粘性布局
+  content：正文，长度不限，需要想办法隐藏滚动条
+  foot：底部内容，包含评论等信息
+
+  toc：目录，和nav一样粘性布局
+-->
+<!--  主视图-->
   <div class="main_view">
-
-    <div id="nav">jl;sdkfj</div>
-
+<!--    博客标题-->
+    <BlogTitle id="nav"></BlogTitle>
+<!--    博客详情-->
     <div class="blog-detail">
+<!--      文章内容-->
       <div id="markdown-preview"></div>
 
+<!--      目录-->
       <div id="markdown-toc">
         <a id="markdown-toc_tmp_item" class="toc_link_a"> 目录</a>
       </div>
@@ -107,9 +120,8 @@ const initOutline = () => {
 <style scoped>
 .main_view {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100%;
+  flex-direction: column; /* 布局方向为列 */
+  align-items: center; /* 定义项目在交叉轴上的对齐方式为居中对齐 */
 }
 
 #nav{
@@ -123,12 +135,11 @@ const initOutline = () => {
 }
 
 .blog-detail {
-  box-sizing: border-box; /* 即使元素有内边距，它的总宽度也不会超过设定的宽度(仅父组件100%，且设置padding有用) */
-  justify-content: center;
+  justify-content: center; /* 内容水平居中对齐 */
   display: flex;
-  flex: 1;
-  flex-direction: row;
-  max-width: 1000px;
+  flex: 1; /* 占满可用空间 */
+  flex-direction: row; /* 布局方向为行 */
+  max-width: 1200px;
   width: 80vw;
 }
 
@@ -150,8 +161,7 @@ const initOutline = () => {
   box-sizing: border-box; /* 即使元素有内边距，它的总宽度也不会超过设定的宽度(仅父组件100%，且设置padding有用) */
   background: #222122FF;
   padding: 10px 40px;
-  max-width: 900px;
-  height: 97vh;
+  max-width: 1000px;
   word-break: break-all;
 }
 

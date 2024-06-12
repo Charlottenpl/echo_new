@@ -29,7 +29,7 @@ const routes = [
     },
     {
         path: "/blog/:id",
-        component:()=>import('../components/Blog/BlogView.vue'),
+        component:()=>import('../components/Blog/view/BlogView.vue'),
     },
 ]
 // 3. 创建路由实例并传递 `routes` 配置
