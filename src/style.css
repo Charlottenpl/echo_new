@@ -1,13 +1,11 @@
 :root {
-    font-family:  'ContentFont', Microsoft YaHei, Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    font-family:  'echo-font', Microsoft YaHei, Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
     line-height: 1.5;
-    font-weight: 400;
 
     color-scheme: light dark;
     color: #213547;
     background: linear-gradient(to top, rgb(255, 255, 255), rgb(247, 249, 252), rgb(242, 246, 252), rgb(223, 232, 252)); /*好网站：https://hypercolor.dev!*/
 
-    font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -103,6 +101,13 @@ button:focus-visible {
 @font-face {
     font-family: 'ContentFont';
     src: url('./assets/font/Roboto-Light.ttf') format('TrueType');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'echo-font';
+    src: url("./assets/font/ZhuZiAWan-2.ttc") format('TrueType');
     font-weight: normal;
     font-style: normal;
 }

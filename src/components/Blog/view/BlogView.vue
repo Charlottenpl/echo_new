@@ -5,6 +5,7 @@ import multimdTable from 'markdown-it-multimd-table';
 import {onBeforeMount, onMounted, onUpdated, ref, getCurrentInstance, nextTick} from "vue"; // 对于基本类型的数据（如字符串、数字和布尔值），使用 ref；对于复杂类型（如对象和数组），使用 reactive
 import {echoed} from "../../../stores/maind";
 import {get} from "../../../api/article.ts"
+import * as tocbot from "tocbot";
 
 const data = echoed()
 
@@ -20,6 +21,13 @@ const imageState = ref(SUCCESS)
 const article = ref({
   md: '',
   articleCover: "/article_def.png",
+  articleTitle: "记录我的第一个博客",
+  username: "Charlottepl",
+  createTime: "2024-06-15 02:14:32",
+  viewCount: 1343,
+  commentCount: 322,
+  likeCount: 2334,
+
 })// 文章信息
 const id = ref('')
 const mdHtml = ref('')
@@ -129,23 +137,21 @@ function addId() {
  *
  */
 function getTocbot() {
-  let script = document.createElement('script');
-  script.type = 'text/javascript';
-  script.src = vue.$constant.tocbot;
-  document.getElementsByTagName('head')[0].appendChild(script);
+  // let script = document.createElement('script');
+  // script.type = 'text/javascript';
+  // script.src = vue.$constant.tocbot;
+  // document.getElementsByTagName('head')[0].appendChild(script);
 
   // 引入成功
-  script.onload = function () {
-    tocbot.init({
-      tocSelector: '#toc',
-      contentSelector: '.entry-content',
-      headingSelector: 'h1, h2, h3, h4, h5',
-      scrollSmooth: true,
-      fixedSidebarOffset: 'auto',
-      scrollSmoothOffset: -100,
-      hasInnerContainers: false
-    });
-  }
+  tocbot.init({
+    tocSelector: '#toc',
+    contentSelector: '.entry-content',
+    headingSelector: 'h1, h2, h3, h4, h5',
+    scrollSmooth: true,
+    fixedSidebarOffset: 'auto',
+    scrollSmoothOffset: -50,
+    hasInnerContainers: false
+  });
   if (vue.$common.mobile()) {
     isMobel.value = true
   }
@@ -158,11 +164,12 @@ function getTocbot() {
       <!-- 封面 -->
       <div class="article-head my-animation-slide-top">
         <!-- 背景图片容器 -->
-        <div class="article-image-container">
+        <div class="el-image my-el-image article-image">
           <!-- 背景图片 -->
           <img
               v-if="imageState == SUCCESS "
               v-once
+              style="object-fit: cover;"
               :src="article.articleCover"
               alt="文章封面"
               class="article-image"
@@ -345,9 +352,14 @@ function getTocbot() {
 
 .article-head {
   height: 40vh;
+  width: 100vw;
   position: relative;
 }
 
+.article-image{
+  width: 100%;
+  height: 100%;
+}
 .article-image::before {
   position: absolute;
   width: 100%;
@@ -355,6 +367,15 @@ function getTocbot() {
   background-color: var(--miniMask);
   content: "";
   overflow: hidden;
+}
+
+.el-image {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  overflow-clip-margin: content-box;
+  overflow: clip;
+  vertical-align: top;
 }
 
 .article-info-container {

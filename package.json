@@ -17,6 +17,7 @@
     "markdown-it-multimd-table": "^4.2.3",
     "pinia": "^2.1.7",
     "refractor": "^4.8.1",
+    "tocbot": "^4.28.2",
     "vditor": "^3.10.3",
     "vue": "^3.4.21",
     "vue-router": "4"
