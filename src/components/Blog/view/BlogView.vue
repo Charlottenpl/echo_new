@@ -1,191 +1,546 @@
 <script setup lang="ts">
-import 'vditor/dist/method.min'
-import {onMounted} from "vue";
-import Vditor from "vditor";
-import "vditor/src/assets/less/index.less"
-import BlogTitle from "./BlogTitle.vue";
+import MarkdownIt from 'markdown-it';
+import multimdTable from 'markdown-it-multimd-table';
 
-onMounted(() => {
+import {onBeforeMount, onMounted, onUpdated, ref, getCurrentInstance, nextTick} from "vue"; // 对于基本类型的数据（如字符串、数字和布尔值），使用 ref；对于复杂类型（如对象和数组），使用 reactive
+import {echoed} from "../../../stores/maind";
+import {get} from "../../../api/article.ts"
+
+const data = echoed()
+
+// 获取全局方法，好麻烦
+const cns = getCurrentInstance()
+const vue = cns!.appContext.config.globalProperties
+
+/**----------------------- return data -----------------------------------*/
+
+const SUCCESS = 0
+const FAIL = 1
+const imageState = ref(SUCCESS)
+const article = ref({
+  md: '',
+  articleCover: "/article_def.png",
+})// 文章信息
+const id = ref('')
+const mdHtml = ref('')
+const isMobel = ref(false)
+
+/**----------------------------------------------------------------------*/
+
+
+
+
+/**-------------------- life_circle methods ------------------------------*/
+
+// 组件挂载之前
+onBeforeMount(()=>{
+  //TODO test
   fetch("/2404.md").then(
       response => response.text()
   ).then(markdown => {
-    console.log("加载成功" + markdown)
-    const docAsUnknown = document as unknown;
-    const doc = docAsUnknown as HTMLElement;
-    Vditor.mermaidRender(doc as HTMLElement, `https://unpkg.com/vditor@3.10.3`, "dark")
-    Vditor.preview(doc.querySelector('#markdown-preview')!, markdown, {
-      // https://ld246.com/article/1549638745630#static-methods
-      mode: "dark",
-      anchor: 1,
-      theme: {
-        //自定义主题的话应该是把path改成自己的url，然后list写url下面有哪些css主题文件，然后current写当前使用的主题是哪个
-        current: "dark",
-        list: {"ant-design": "Ant Design", "dark": "Dark", "light": "Light", "wechat": "WeChat"},
-        path: "https://unpkg.com/vditor@3.10.3/dist/css/content-theme"
-      },
-      hljs: {
-        enable: true,
-        lineNumber: true,
-        style: "dracula", //代码风格：https://xyproto.github.io/splash/docs/longer/all.html
-      },
-      after() {
-        if (window.innerWidth <= 768) {
-          return
-        }
-        initOutline()
-      },
-    })
+    mdArticle(markdown)
   })
-
-
+  // getArticle();
 })
 
+// 组件挂载完成
+onMounted(()=>{
+  data.webInfo.host = window.location.host;
+})
 
-const initOutline = () => {
-  const headingElements: any[] = []
-  const outlineElement = document.getElementById('markdown-toc')
-  let count = 0;
-  Array.from(document.getElementById('markdown-preview')!.children).forEach((item) => {
-    if (item.tagName.length === 2 && item.tagName !== 'HR' && item.tagName.indexOf('H') === 0) {
-      headingElements.push(item)
-      console.log(item.textContent)
-      //设置id
-      item.id = "toc-link" + count
-      count++
-      // 创建一个新的 <a> 标签
-      var link = document.createElement('a');
-      link.classList.add("toc_link_a") //无效，因为vue渲染之后class名字已经变了
-      // link.setAttribute("style", "cursor: pointer")
-
-      // 为每个目录项添加点击事件监听器
-      link.addEventListener('click', function (event) {
-        // 阻止链接默认的导航行为
-        event.preventDefault();
-
-        // 滚动到目标元素
-        const preView = document.getElementById('markdown-preview');
-        const targetElement = document.getElementById(item.id);
-
-        preView!.scrollTop = targetElement!.offsetTop - 40;
-      });
+// await nextTick() 等待下一次DOM更新
 
 
-      if (item.textContent) {
-        if (item.textContent.length > 15) {
-          link.textContent = item.textContent.slice(0, 15) + "..."
-        } else {
-          link.textContent = item.textContent
-        }
+// 因响应式状态变更而更新DOM时
+onUpdated(()=>{
 
-      } else {
-        link.textContent = "undefind"
-      }
+})
+/**--------------------------------------------------------------------*/
 
-      outlineElement!.appendChild(link);
-    }
-  })
+
+/**-------------------- listener methods ------------------------------*/
+function handleImageLoad(event) {
+  // 处理图片加载成功的逻辑（如果需要）
+  imageState.value = SUCCESS
+}
+function handleImageError(event) {
+  imageState.value = FAIL; // 设置图片加载失败的标记
 }
 
+/**--------------------------------------------------------------------*/
+
+
+function getArticle(){
+
+  let id = ""
+  let password = ""
+
+  get({id: id, password: password}).then((res)=>{
+    // 检查数据是否为空
+    if (!vue.$common.isEmpty(res.data)) {
+      article.value = res.data;
+      // 最新文章列表
+      // this.getNews();
+
+      mdArticle(article.value.md)
+    }
+  }).catch((error) => {
+    console.log(error)
+  });
+
+}
+
+
+/**
+ * 渲染md内容
+ * @param content
+ */
+function mdArticle(content: string) {
+  //markdown-it渲染
+  const md = new MarkdownIt({breaks: true}).use(multimdTable);
+  mdHtml.value = md.render(content);// 渲染结果
+
+  // 在DOM更新完成后执行的代码
+  nextTick(()=>{
+    // 给所有
+      vue.$common.imgShow(".entry-content img");
+    //   this.highlight();
+      addId();
+      getTocbot();
+  })
+
+}
+
+
+/**
+ * 为标题添加id
+ */
+function addId() {
+  const headingElements = document.querySelectorAll('.entry-content h1, .entry-content h2, .entry-content h3, .entry-content h4, .entry-content h5, .entry-content h6');
+  headingElements.forEach((el, index) => {
+    if (!el.id) {
+      el.id = 'toc-' + index;
+    }
+  });
+}
+
+
+/**
+ *
+ */
+function getTocbot() {
+  let script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src = vue.$constant.tocbot;
+  document.getElementsByTagName('head')[0].appendChild(script);
+
+  // 引入成功
+  script.onload = function () {
+    tocbot.init({
+      tocSelector: '#toc',
+      contentSelector: '.entry-content',
+      headingSelector: 'h1, h2, h3, h4, h5',
+      scrollSmooth: true,
+      fixedSidebarOffset: 'auto',
+      scrollSmoothOffset: -100,
+      hasInnerContainers: false
+    });
+  }
+  if (vue.$common.mobile()) {
+    isMobel.value = true
+  }
+}
 </script>
 
-
 <template>
-<!--
-  视图结构
-  main：父视图，使用flex布局，并且方向为竖向
-  nav： 包含标题导航栏等信息，使用粘性布局
-  content：正文，长度不限，需要想办法隐藏滚动条
-  foot：底部内容，包含评论等信息
+  <div>
+    <div v-if="!vue.$common.isEmpty(article)">
+      <!-- 封面 -->
+      <div class="article-head my-animation-slide-top">
+        <!-- 背景图片容器 -->
+        <div class="article-image-container">
+          <!-- 背景图片 -->
+          <img
+              v-if="imageState == SUCCESS "
+              v-once
+              :src="article.articleCover"
+              alt="文章封面"
+              class="article-image"
+              @load="handleImageLoad"
+              @error="handleImageError">
+          <!-- 错误显示的备用图片 -->
+          <div v-else-if="imageState == FAIL" class="image-slot">
+            <div class="article-image"></div>
+          </div>
 
-  toc：目录，和nav一样粘性布局
--->
-<!--  主视图-->
-  <div class="main_view">
-<!--    博客标题-->
-    <BlogTitle id="nav"></BlogTitle>
-    <!--      目录-->
-    <div id="markdown-toc">
-      <a id="markdown-toc_tmp_item" class="toc_link_a"> 目录</a>
+        </div>
+        <!-- 文章信息 -->
+        <div class="article-info-container">
+          <div class="article-title">{{ article.articleTitle }}</div>
+          <div class="article-info">
+            <svg viewBox="0 0 1024 1024" width="14" height="14" style="vertical-align: -2px;">
+              <path
+                  d="M510.4 65.5l259.69999999 0 1e-8 266.89999999c0 147.50000001-116.2 266.89999999-259.7 266.90000001-143.4 0-259.7-119.5-259.7-266.90000001 0.1-147.5 116.3-266.9 259.7-266.89999999z"
+                  fill="#FF9FCF"></path>
+              <path
+                  d="M698.4 525.2l-13 0c53-48.4 86.5-117.8 86.5-195.20000001 0-10.2-0.7-20.3-1.8-30.19999999C613.8 377.50000001 438.6 444.9 266 437.7c15 33.4 36.7 63.1 63.5 87.5l-5.3 0c-122.6 0-225.5 88.1-248.8 204.1C340 677.2 597.7 609.2 862.2 585.7c-44.3-37.6-101.5-60.5-163.8-60.5z"
+                  fill="#FF83BB"></path>
+              <path
+                  d="M862.2 585.7C597.7 609.2 340 677.2 75.4 729.3c-3.2 16.1-5 32.6-5 49.6 0 99.8 81.7 181.5 181.5 181.5l518.6 0c99.8 0 181.5-81.7 181.5-181.5 0.1-77.2-35-146.5-89.8-193.2z"
+                  fill="#FF5390"></path>
+              <path
+                  d="M770.1 299.8C755.1 168 643.3 65.5 507.4 65.5c-146.1 0-264.5 118.4-264.5 264.5 0 38.4 8.3 74.8 23.1 107.7 172.6 7.2 347.8-60.2 504.1-137.9z"
+                  fill="#FF9FCF"></path>
+              <path
+                  d="M436.4 282.1c0 24.1-19.6 43.7-43.7 43.7S349 306.2 349 282.1s19.6-43.7 43.7-43.7c24.19999999 0 43.7 19.6 43.7 43.7z"
+                  fill="#FFFFFF"></path>
+              <path d="M625 282.1m-43.7 0a43.7 43.7 0 1 0 87.4 0 43.7 43.7 0 1 0-87.4 0Z" fill="#FFFFFF"></path>
+            </svg>
+            <span>&nbsp;{{ article.username }}</span>
+            <span>·</span>
+            <svg viewBox="0 0 1024 1024" width="14" height="14" style="vertical-align: -2px;">
+              <path d="M512 512m-512 0a512 512 0 1 0 1024 0 512 512 0 1 0-1024 0Z" fill="#409EFF"></path>
+              <path
+                  d="M654.222222 256c-17.066667 0-28.444444 11.377778-28.444444 28.444444v56.888889c0 17.066667 11.377778 28.444444 28.444444 28.444445s28.444444-11.377778 28.444445-28.444445v-56.888889c0-17.066667-11.377778-28.444444-28.444445-28.444444zM369.777778 256c-17.066667 0-28.444444 11.377778-28.444445 28.444444v56.888889c0 17.066667 11.377778 28.444444 28.444445 28.444445s28.444444-11.377778 28.444444-28.444445v-56.888889c0-17.066667-11.377778-28.444444-28.444444-28.444444z"
+                  fill="#FFFFFF"></path>
+              <path
+                  d="M725.333333 312.888889H711.111111v28.444444c0 31.288889-25.6 56.888889-56.888889 56.888889s-56.888889-25.6-56.888889-56.888889v-28.444444h-170.666666v28.444444c0 31.288889-25.6 56.888889-56.888889 56.888889s-56.888889-25.6-56.888889-56.888889v-28.444444h-14.222222c-22.755556 0-42.666667 19.911111-42.666667 42.666667v341.333333c0 22.755556 19.911111 42.666667 42.666667 42.666667h426.666666c22.755556 0 42.666667-19.911111 42.666667-42.666667v-341.333333c0-22.755556-19.911111-42.666667-42.666667-42.666667zM426.666667 654.222222h-56.888889c-17.066667 0-28.444444-11.377778-28.444445-28.444444s11.377778-28.444444 28.444445-28.444445h56.888889c17.066667 0 28.444444 11.377778 28.444444 28.444445s-11.377778 28.444444-28.444444 28.444444z m227.555555 0h-56.888889c-17.066667 0-28.444444-11.377778-28.444444-28.444444s11.377778-28.444444 28.444444-28.444445h56.888889c17.066667 0 28.444444 11.377778 28.444445 28.444445s-11.377778 28.444444-28.444445 28.444444z m0-113.777778h-56.888889c-17.066667 0-28.444444-11.377778-28.444444-28.444444s11.377778-28.444444 28.444444-28.444444h56.888889c17.066667 0 28.444444 11.377778 28.444445 28.444444s-11.377778 28.444444-28.444445 28.444444z"
+                  fill="#FFFFFF"></path>
+            </svg>
+            <span>&nbsp;{{ article.createTime }}</span>
+            <span>·</span>
+            <svg viewBox="0 0 1024 1024" width="14" height="14" style="vertical-align: -2px;">
+              <path d="M14.656 512a497.344 497.344 0 1 0 994.688 0 497.344 497.344 0 1 0-994.688 0z"
+                    fill="#FF0000"></path>
+              <path
+                  d="M374.976 872.64c-48.299-100.032-22.592-157.44 14.421-211.37 40.448-58.966 51.115-117.611 51.115-117.611s31.659 41.386 19.115 106.005c56.149-62.72 66.816-162.133 58.325-200.405 127.317 88.746 181.59 281.002 108.181 423.381C1016 652.501 723.093 323.2 672.277 285.867c16.939 37.333 20.054 100.032-14.101 130.474-58.027-219.84-201.664-265.002-201.664-265.002 16.96 113.536-61.781 237.397-137.344 330.24-2.816-45.163-5.632-76.544-29.483-119.808-5.333 82.176-68.373 149.269-85.29 231.445-22.912 111.637 17.237 193.173 170.581 279.424z"
+                  fill="#FFFFFF"></path>
+            </svg>
+            <span>&nbsp;{{ article.viewCount }}</span>
+            <span>·</span>
+            <svg viewBox="0 0 1024 1024" width="14" height="14" style="vertical-align: -2px;">
+              <path
+                  d="M113.834667 291.84v449.194667a29.013333 29.013333 0 0 0 28.842666 29.013333h252.928v90.453333l160.597334-90.453333h252.928a29.013333 29.013333 0 0 0 29.013333-29.013333V291.84a29.013333 29.013333 0 0 0-29.013333-29.013333h-665.6a29.013333 29.013333 0 0 0-29.696 29.013333z"
+                  fill="#FFDEAD"></path>
+              <path
+                  d="M809.130667 262.826667h-665.6a29.013333 29.013333 0 0 0-28.842667 29.013333v40.106667a29.013333 29.013333 0 0 1 28.842667-29.013334h665.6a29.013333 29.013333 0 0 1 29.013333 29.013334V291.84a29.013333 29.013333 0 0 0-29.013333-29.013333z"
+                  fill="#FFF3DB"></path>
+              <path
+                  d="M556.202667 770.048h252.928a29.013333 29.013333 0 0 0 29.013333-29.013333V362.837333s-59.733333 392.533333-724.309333 314.709334v63.488a29.013333 29.013333 0 0 0 28.842666 29.013333h253.098667v90.453333z"
+                  fill="#F2C182"></path>
+              <path
+                  d="M619.008 632.32l101.888-35.157333-131.754667-76.117334 29.866667 111.274667zM891.904 148.992a61.44 61.44 0 0 0-84.138667 22.528l-19.968 34.133333 106.666667 61.610667 19.968-34.133333a61.781333 61.781333 0 0 0-22.528-84.138667z"
+                  fill="#69BAF9"></path>
+              <path d="M775.338667 198.775467l131.669333 76.032-186.026667 322.218666-131.6864-76.032z"
+                    fill="#F7FBFF"></path>
+              <path
+                  d="M775.168 198.826667l-5.290667 9.216 59.221334 34.133333a34.133333 34.133333 0 0 1 12.458666 46.592l-139.946666 242.346667a34.133333 34.133333 0 0 1-46.762667 12.629333l-59.050667-34.133333-6.656 11.434666 88.746667 51.2L720.896 597.333333l186.026667-322.56z"
+                  fill="#D8E3F0"></path>
+              <path
+                  d="M616.448 622.592l2.56 9.728 101.888-35.157333-44.885333-25.941334-59.562667 51.370667zM891.904 148.992c-1.024 0-2.218667-0.853333-3.242667-1.536A61.610667 61.610667 0 0 1 887.466667 204.8l-19.968 34.133333-73.728-42.496-5.12 8.704 106.666666 61.610667 19.968-34.133333a61.781333 61.781333 0 0 0-23.381333-83.626667z"
+                  fill="#599ED4"></path>
+              <path
+                  d="M265.898667 417.621333H494.933333a17.066667 17.066667 0 1 0 0-34.133333H265.898667a17.066667 17.066667 0 1 0 0 34.133333zM265.898667 533.504H494.933333a17.066667 17.066667 0 0 0 0-34.133333H265.898667a17.066667 17.066667 0 0 0 0 34.133333z"
+                  fill="#3D3D63"></path>
+              <path
+                  d="M959.488 354.645333a99.84 99.84 0 0 0-23.722667-127.488 78.677333 78.677333 0 0 0-142.848-64.170666l-11.605333 20.138666a17.066667 17.066667 0 0 0-20.821333 7.168l-32.085334 55.466667H142.677333a46.250667 46.250667 0 0 0-45.909333 46.08v449.194667a46.08 46.08 0 0 0 45.909333 46.08h236.032v73.386666a17.066667 17.066667 0 0 0 8.362667 14.848 17.066667 17.066667 0 0 0 8.704 2.218667 17.066667 17.066667 0 0 0 8.362667-2.218667l156.672-88.234666h248.32a46.08 46.08 0 0 0 46.08-46.08V398.677333L921.6 283.306667a17.066667 17.066667 0 0 0-4.266667-21.504l1.877334-3.413334a65.365333 65.365333 0 0 1 10.410666 79.189334l-53.077333 91.989333a56.832 56.832 0 0 0 20.821333 77.653333 17.066667 17.066667 0 0 0 24.234667-6.314666 17.066667 17.066667 0 0 0-6.997333-23.04 23.04 23.04 0 0 1-8.362667-31.061334z m-138.410667 386.389334a11.946667 11.946667 0 0 1-11.946666 11.946666H556.202667a17.066667 17.066667 0 0 0-8.362667 2.218667l-134.997333 76.117333v-61.269333a17.066667 17.066667 0 0 0-17.066667-17.066667H142.677333a11.946667 11.946667 0 0 1-11.776-11.946666V291.84a11.946667 11.946667 0 0 1 11.776-11.946667h565.930667L574.464 512a17.066667 17.066667 0 0 0-1.706667 12.970667L597.333333 615.253333H265.898667a17.066667 17.066667 0 1 0 0 34.133334h352.938666a17.066667 17.066667 0 0 0 5.802667 0l102.4-35.328a17.066667 17.066667 0 0 0 9.216-7.509334l85.333333-147.968z m-204.8-184.661334l63.829334 36.864-49.322667 17.066667z m206.848-170.666666v1.365333l-108.373333 186.709333-102.4-59.050666L781.482667 221.866667l102.4 59.050666z m76.458667-161.28L887.466667 244.224l-76.970667-44.373333 11.264-19.797334a44.544 44.544 0 1 1 77.141333 44.544z"
+                  fill="#3D3D63"></path>
+            </svg>
+            <span>&nbsp;{{ article.commentCount }}</span>
+            <span>·</span>
+            <svg viewBox="0 0 1024 1024" width="14" height="14" style="vertical-align: -2px;">
+              <path
+                  d="M510.671749 348.792894S340.102978 48.827055 134.243447 254.685563C-97.636714 486.565724 510.671749 913.435858 510.671749 913.435858s616.107079-419.070494 376.428301-658.749272c-194.095603-194.096626-376.428302 94.106308-376.428301 94.106308z"
+                  fill="#FF713C"></path>
+              <path
+                  d="M510.666632 929.674705c-3.267417 0-6.534833-0.983397-9.326413-2.950192-16.924461-11.872399-414.71121-293.557896-435.220312-529.448394-5.170766-59.482743 13.879102-111.319341 56.643068-154.075121 51.043536-51.043536 104.911398-76.930113 160.095231-76.930114 112.524796 0 196.878996 106.48115 228.475622 153.195078 33.611515-45.214784 122.406864-148.20646 234.04343-148.20646 53.930283 0 105.46603 24.205285 153.210428 71.941496 45.063335 45.063335 64.954361 99.200326 59.133795 160.920016C935.306982 641.685641 536.758893 915.327952 519.80271 926.859589a16.205077 16.205077 0 0 1-9.136078 2.815116zM282.857183 198.75574c-46.25344 0-92.396363 22.682605-137.127124 67.413365-36.149315 36.157501-51.614541 78.120218-47.25321 128.291898 17.575284 202.089671 352.199481 455.119525 412.332023 499.049037 60.434417-42.86732 395.406538-289.147446 414.567947-492.458945 4.933359-52.344159-11.341303-96.465029-49.759288-134.88199-41.431621-41.423435-85.24243-62.424748-130.242319-62.424748-122.041544 0-220.005716 152.203494-220.989114 153.742547-3.045359 4.806469-8.53335 7.883551-14.101159 7.534603a16.257266 16.257266 0 0 1-13.736863-8.184403c-0.902556-1.587148-91.569532-158.081365-213.690893-158.081364z"
+                  fill="#885F44"></path>
+            </svg>
+            <span>&nbsp;{{ article.likeCount }}</span>
+          </div>
+        </div>
+
+        <div class="article-info-news"
+             @click="weiYanDialogVisible = true"
+             v-if="!vue.$common.isEmpty(data.currentUser) && data.currentUser.id === article.userId">
+          <svg width="30" height="30" viewBox="0 0 1024 1024">
+            <path d="M0 0h1024v1024H0V0z" fill="#202425" opacity=".01"></path>
+            <path
+                d="M989.866667 512c0 263.918933-213.947733 477.866667-477.866667 477.866667S34.133333 775.918933 34.133333 512 248.081067 34.133333 512 34.133333s477.866667 213.947733 477.866667 477.866667z"
+                fill="#FF7744"></path>
+            <path
+                d="M512 221.866667A51.2 51.2 0 0 1 563.2 273.066667v187.733333H750.933333a51.2 51.2 0 0 1 0 102.4h-187.733333V750.933333a51.2 51.2 0 0 1-102.4 0v-187.733333H273.066667a51.2 51.2 0 0 1 0-102.4h187.733333V273.066667A51.2 51.2 0 0 1 512 221.866667z"
+                fill="#FFFFFF"></path>
+          </svg>
+        </div>
+      </div>
+      <!-- 文章 -->
+      <div style="background: var(--background);">
+        <div class="article-container my-animation-slide-bottom">
+          <div v-if="!vue.$common.isEmpty(article.videoUrl)" style="margin-bottom: 20px">
+            <videoPlayer :url="{src: vue.$common.decrypt(article.videoUrl)}"
+                         :cover="article.articleCover">
+            </videoPlayer>
+          </div>
+
+          <!-- 最新进展 -->
+          <div v-if="!vue.$common.isEmpty(treeHoleList)" class="process-wrap">
+            <el-collapse accordion value="1">
+              <el-collapse-item title="最新进展" name="1">
+                <process :treeHoleList="treeHoleList" @deleteTreeHole="deleteTreeHole"></process>
+              </el-collapse-item>
+            </el-collapse>
+
+            <hr>
+          </div>
+
+          <!-- 文章内容 -->
+          <div v-html="mdHtml" class="entry-content"></div>
+          <!-- 最后更新时间 -->
+          <div class="article-update-time">
+            <span>文章最后更新于 {{ article.updateTime }}</span>
+          </div>
+          <!-- 分类 -->
+          <div class="article-sort">
+<!--            <span @click="$router.push({path: '/sort', query: {sortId: article.sortId, labelId: article.labelId}})">{{ article.sort.sortName +" ▶ "+ article.label.labelName}}</span>-->
+          </div>
+          <!-- 作者信息 -->
+          <blockquote>
+            <div>
+              作者：{{article.username}}
+            </div>
+            <div>
+              <span>版权&许可请详阅</span>
+              <span style="color: #38f;cursor: pointer"
+                    @click="copyrightDialogVisible = true">
+                版权声明
+              </span>
+            </div>
+          </blockquote>
+          <!-- 订阅 -->
+          <div class="myCenter" id="article-like" @click="subscribeLabel()">
+            <i class="el-icon-thumb article-like-icon" :class="{'article-like': subscribe}"></i>
+          </div>
+
+          <!-- 评论 -->
+          <div v-if="article.commentStatus === true">
+            <comment :type="'article'" :source="article.id" :userId="article.userId"></comment>
+          </div>
+        </div>
+
+        <div id="toc" v-show="!isMobel" class="toc"></div>
+      </div>
+
+
     </div>
-<!--    博客详情-->
-    <div class="blog-detail">
-<!--      文章内容-->
-      <div id="markdown-preview"></div>
 
+    <div id="toc-button" @click="clickTocButton()">
+      <i class="fa fa-align-justify" aria-hidden="true"></i>
     </div>
 
   </div>
 </template>
 
 <style scoped>
-/**
-  position定位
-  1. static: 简单的文档流，默认就是这个
-  2. relative: 相对定位，相对与原本位置，不脱离文档流
-  3. absolute: 绝对定位，相对于除static以外的第一个父元素进行定位，脱离文档流
-  4. fixed: 相对于浏览器窗口位置固定，比如Top按钮
-  5. sticky: 粘性布局，当处于窗口中时时relative属性，当滑动到快消失时是fixed
 
- */
-.main_view {
-  width: 100vw;
-  padding: 0px;
-  padding-top: 60px;
-  margin: 0px;
+.article-head {
+  height: 40vh;
   position: relative;
 }
 
-.main_view::-webkit-scrollbar {
-  display: none;  /* Safari and Chrome */
-}
-
-
-#nav{
-  position: fixed;
-  height: 50px;
+.article-image::before {
+  position: absolute;
   width: 100%;
-  background: #2f363d;
-  text-align: center;
-  z-index: 999;
-  top: 0px;
+  height: 100%;
+  background-color: var(--miniMask);
+  content: "";
+  overflow: hidden;
 }
 
-.blog-detail {
-
+.article-info-container {
+  position: absolute;
+  bottom: 15px;
+  left: 20%;
+  color: var(--white);
 }
 
-#markdown-toc {
-  width: 230px;
-  position: sticky;
-  top: 250px;
+.article-info-news {
+  position: absolute;
+  bottom: 10px;
+  right: 20%;
+  cursor: pointer;
+  animation: scale 1s ease-in-out infinite;
 }
 
-/* !!!! v-deep渗透,告诉 Vue 忽略样式作用域的限制，允许接下来的选择器影响到子组件    */
-:deep(.toc_link_a) {
-  color: #3b3b3b;
-  cursor: pointer !important;
+.article-title {
+  font-size: 28px;
+  margin-bottom: 15px;
 }
 
-#markdown-preview {
-  box-sizing: border-box; /* 即使元素有内边距，它的总宽度也不会超过设定的宽度(仅父组件100%，且设置padding有用) */
-  background: #222122FF;
-  padding: 10px 40px;
-  max-width: 1000px;
-  word-break: break-all;
+.article-info {
+  font-size: 14px;
+  user-select: none;
 }
 
-#markdown-preview::-webkit-scrollbar {
-  display: none;
+.article-info i {
+  margin-right: 6px;
 }
 
+.article-info span:not(:last-child) {
+  margin-right: 5px;
+}
 
-/*---------------------------------------------- Dark Theme ----------------------------------------------------------*/
+.article-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
 
-/* 深色主题 */
-@media (prefers-color-scheme: dark) {
-  /* !!!! v-deep渗透,告诉 Vue 忽略样式作用域的限制，允许接下来的选择器影响到子组件    */
-  :deep(.toc_link_a) {
-    color: #d2d7e3;
+.article-update-time {
+  color: var(--greyFont);
+  font-size: 12px;
+  margin: 20px 0;
+  user-select: none;
+}
+
+blockquote {
+  line-height: 2;
+  border-left: 0.2rem solid var(--blue);
+  padding: 10px 1rem;
+  background-color: var(--azure);
+  border-radius: 4px;
+  margin: 0 0 40px 0;
+  user-select: none;
+  color: var(--black);
+}
+
+.article-sort {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.article-sort span {
+  padding: 3px 10px;
+  background-color: var(--themeBackground);
+  border-radius: 5px;
+  font-size: 14px;
+  color: var(--white);
+  transition: all 0.3s;
+  margin-right: 25px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.article-sort span:hover {
+  background-color: var(--red);
+}
+
+.article-like {
+  color: var(--red) !important;
+}
+
+.article-like-icon {
+  font-size: 60px;
+  cursor: pointer;
+  color: var(--greyFont);
+  transition: all 0.5s;
+  border-radius: 50%;
+  margin-bottom: 20px;
+}
+
+.article-like-icon:hover {
+  transform: rotate(360deg);
+}
+
+.process-wrap {
+  margin: 0 0 40px;
+}
+
+.process-wrap hr {
+  position: relative;
+  margin: 10px auto 60px;
+  border: 2px dashed var(--lightGreen);
+  overflow: visible;
+}
+
+.process-wrap hr:before {
+  position: absolute;
+  top: -14px;
+  left: 5%;
+  color: var(--lightGreen);
+  content: '❄';
+  font-size: 30px;
+  line-height: 1;
+  transition: all 1s ease-in-out;
+}
+
+.process-wrap hr:hover:before {
+  left: calc(95% - 20px);
+}
+
+.process-wrap >>> .el-collapse-item__header {
+  border-bottom: unset;
+  font-size: 20px;
+  background-color: var(--background);
+  color: var(--lightGreen);
+}
+
+.process-wrap >>> .el-collapse-item__wrap {
+  background-color: var(--background);
+}
+
+.process-wrap .el-collapse {
+  border-top: unset;
+  border-bottom: unset;
+}
+
+.process-wrap >>> .el-collapse-item__wrap {
+  border-bottom: unset;
+}
+
+.password-content {
+  font-size: 13px;
+  color: var(--maxGreyFont);
+  line-height: 1.5;
+}
+
+#toc-button {
+  position: fixed;
+  right: 3vh;
+  bottom: 8vh;
+  animation: slide-bottom 0.5s ease-in-out both;
+  z-index: 100;
+  cursor: pointer;
+  font-size: 23px;
+  width: 30px;
+}
+
+#toc-button:hover {
+  color: var(--themeBackground);
+}
+
+.copyright-container {
+  color: var(--black);
+  line-height: 2.5;
+  padding: 0 30px 10px;
+  font-size: 16px;
+}
+
+@media screen and (max-width: 700px) {
+  .article-info-container {
+    left: 20px;
+    max-width: 320px;
+  }
+
+  .article-info-news {
+    right: 20px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  #toc-button {
+    right: 0.5vh;
   }
 }
 </style>
