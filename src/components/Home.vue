@@ -1,95 +1,264 @@
 <script setup lang="ts">
-import Aside from "./Home/Aside.vue";
-import {ref, onMounted} from 'vue';
+
+import {echoed} from "../stores/maind";
+import {getCurrentInstance, onBeforeMount, onMounted, onUpdated, ref} from "vue";
 import HomeNav from "./Home/HomeNav.vue";
 
+const data = echoed()
+let navs = data.navs
+
+// 获取全局方法，好麻烦
+const cns = getCurrentInstance()
+const vue = cns!.appContext.config.globalProperties
 
 
-const isAsideVisible = ref(true)
+/**----------------------- return data -----------------------------------*/
+
+const toolButton = ref(false)
+const mouseAnimation = ref(false)
+const isDark = ref(false)
+const scrollTop = ref(0)
+const mobile = ref(false)
+const toolbarDrawer = ref(false)
 
 
-onMounted(() => {
-  isAsideVisible.value = window.innerWidth > 800
 
-  window.addEventListener('resize', () => {
-    isAsideVisible.value = window.innerWidth > 800
-    console.log(isAsideVisible)
-  })
+/**----------------------------------------------------------------------*/
+
+
+
+/**-------------------- life_circle methods ------------------------------*/
+
+// 组件挂载之前
+onBeforeMount(()=>{
+
 })
+
+// 组件挂载完成
+onMounted(()=>{
+  data.webInfo.host = window.location.host;
+})
+
+// await nextTick() 等待下一次DOM更新
+
+
+// 因响应式状态变更而更新DOM时
+onUpdated(()=>{
+
+})
+/**--------------------------------------------------------------------*/
 
 </script>
 
 <template>
-  <div class="home-container">
-    <div class="home">
-      <Aside class="aside-panel" v-show="isAsideVisible"/>
+  <div>
 
-      <div class="content-panel">
-        <HomeNav class="nav"/>
-        <!--路由页面-->
-        <router-view class="content-view"/>
-      </div>
+    <HomeNav class="nav"/>
 
-      <!--      <Content class="content-panel"/>-->
+    <!--路由页面-->
+    <div id="main-container">
+      <router-view></router-view>
     </div>
+
+    <!-- 点击动画 -->
+    <canvas v-if="mouseAnimation" id="mousedown"
+            style="position:fixed;left:0;top:0;pointer-events:none;z-index: 1000">
+    </canvas>
+
+    <!-- 图片预览 -->
+    <div id="outerImg">
+      <div id="innerImg" style="position:absolute">
+        <img id="bigImg" src=""/>
+      </div>
+    </div>
+
+
   </div>
 </template>
 
 <style scoped>
-.home-container {
-  background: linear-gradient(to top, rgb(255, 255, 255), rgb(247, 249, 252), rgb(242, 246, 252), rgb(223, 232, 252)); /*好网站：https://hypercolor.dev!*/
-  /*background: linear-gradient(to right, rgb(255, 228, 230), rgb(204, 251, 241));*/
-  box-sizing: border-box; /* 即使元素有内边距，它的总宽度也不会超过设定的宽度(仅父组件100%，且设置padding有用) */
-  width: 100vw; /* 使用视口宽度单位 */
-  height: 100vh; /* 使用视口高度单位 */
-  margin: 0; /* 移除默认的 margin */
 
-  /*
-  overflow: auto; !* 如果内容超出屏幕大小，允许滚动 *!
-  */
+
+.toolbar-content {
+  width: 100%;
+  height: 60px;
+  color: var(--white);
+  /* 固定位置，不随滚动条滚动 */
+  position: fixed;
+  z-index: 100;
+  /* 禁止选中文字 */
+  user-select: none;
+  transition: all 0.3s ease-in-out;
 }
 
-.home{
-  overflow:hidden; /*子view会遮挡div的圆角所以加上这个*/
-  float: left;
-  border-radius: 6px; /* 为元素添加圆角，半径为 10px */
-  display: inline-flex; /*水平排列*/
-  flex-direction: row; /* 子元素将水平排列 */
-  width: 95%;
-  height: 100%;
+.toolbar-content.enter {
+  background: var(--toolbarBackground);
+  color: var(--toolbarFont);
+  box-shadow: 0 1px 3px 0 rgba(0, 34, 77, 0.05);
 }
 
-.nav {
-  height: 30px;
-  margin-top: 20px;
+.toolbar-content.hoverEnter {
+  background: var(--translucent);
+  box-shadow: 0 1px 3px 0 rgba(0, 34, 77, 0.05);
 }
 
-.aside-panel {
-  position: relative; /* 必须设置定位属性 */
-  z-index: 1; /* 设置一个较高的 z-index 值 */
-  flex: 0 0 280px; /* 固定左侧面板的宽度 */
-  margin-right: 20px;
-  /*box-shadow: 10px 0 15px -5px rgba(0, 0, 0, 0.15); !* 向右下方的阴影 *!*/
+.toolbar-title {
+  margin-left: 30px;
+  cursor: pointer;
 }
 
-.content-panel {
+.toolbar-mobile-menu {
+  font-size: 30px;
+  margin-right: 15px;
+  cursor: pointer;
+}
+
+.scroll-menu {
+  margin: 0 25px 0 0;
   display: flex;
-  flex-direction: column;
-
-  flex: 1; /* 占据剩余空间 */
+  justify-content: flex-end;
+  padding: 0;
 }
 
-.content-view{
-  overflow: auto;
+.scroll-menu li {
+  list-style: none;
+  margin: 0 12px;
+  font-size: 17px;
+  height: 60px;
+  line-height: 60px;
+  position: relative;
+  cursor: pointer;
 }
 
-/*---------------------------------------------- Dark Theme ----------------------------------------------------------*/
+.scroll-menu li:hover .my-menu span {
+  color: var(--themeBackground);
+}
 
-/* 深色主题 */
-@media (prefers-color-scheme: dark) {
-  .home-container {
-    /*background: linear-gradient(to top, rgb(19, 19, 27), rgb(19, 19, 27), rgb(40, 48, 75), rgb(56, 69, 112)); /*好网站：https://hypercolor.dev!*/
-    background: #1C1B1BFF;
+.scroll-menu li:hover .my-menu i {
+  color: var(--themeBackground);
+  animation: scale 1.5s ease-in-out infinite;
+}
+
+.scroll-menu li .my-menu:after {
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: 0;
+  height: 6px;
+  background-color: var(--themeBackground);
+  width: 100%;
+  max-width: 0;
+  transition: max-width 0.25s ease-in-out;
+}
+
+.scroll-menu li:hover .my-menu:after {
+  max-width: 100%;
+}
+
+.sortMenu {
+  margin-left: 44px;
+  font-size: 17px;
+  position: relative;
+}
+
+.sortMenu:after {
+  top: 32px;
+  width: 35px;
+  left: 0;
+  height: 2px;
+  background: var(--themeBackground);
+  content: "";
+  border-radius: 1px;
+  position: absolute;
+}
+
+.el-dropdown {
+  font-size: unset;
+  color: unset;
+}
+
+.el-popper[x-placement^=bottom] {
+  margin-top: -8px;
+}
+
+.el-dropdown-menu {
+  padding: 5px 0;
+}
+
+.el-dropdown-menu__item {
+  font-size: unset;
+}
+
+.el-dropdown-menu__item:hover {
+  background-color: var(--white);
+  color: var(--themeBackground);
+}
+
+.toolButton {
+  position: fixed;
+  right: 3vh;
+  bottom: 3vh;
+  animation: slide-bottom 0.5s ease-in-out both;
+  z-index: 100;
+  cursor: pointer;
+  font-size: 25px;
+  width: 30px;
+}
+
+.my-setting {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.my-setting i {
+  padding: 5px;
+}
+
+.my-setting i:hover {
+  color: var(--themeBackground);
+}
+
+.cd-top {
+  background: var(--toTop) no-repeat center;
+  position: fixed;
+  right: 5vh;
+  top: -900px;
+  z-index: 99;
+  width: 70px;
+  height: 900px;
+  background-size: contain;
+  transition: all 0.5s ease-in-out;
+  cursor: pointer;
+}
+
+.backTop {
+  transition: all 0.3s ease-in;
+  position: relative;
+  top: 0;
+  left: -13px;
+}
+
+.backTop:hover {
+  top: -10px;
+}
+
+#outerImg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  display: none;
+}
+
+@media screen and (max-width: 400px) {
+  .toolButton {
+    right: 0.5vh;
   }
 }
 </style>

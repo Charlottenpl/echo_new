@@ -234,7 +234,7 @@ export const echoed = defineStore('main_store', {
 
         // 这里之前是 JSON.parse(localStorage.getItem("toolbar") || '{"visible": false, "enter": true}')
         toolbar: {
-            visible: false,
+            visible: true,
             enter: true
         },
         sortInfo: [],
@@ -243,7 +243,7 @@ export const echoed = defineStore('main_store', {
         sysConfig: {},
         webInfo: {
             host: "",
-            webName: "",
+            webName: "Charlottepl's blog",
             webTitle: [],
             notices: [],
             randomCover: [],
