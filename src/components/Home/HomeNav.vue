@@ -22,7 +22,22 @@ const hoverEnter = ref(false) // 标识鼠标是否移入div
 
 // 组件挂载之前
 onBeforeMount(()=>{
+  data.toolbar.enter = false
 
+  // this.getWebInfo();
+  // this.getSysConfig();
+  // this.getSortInfo();
+  //
+  // this.mobile = document.body.clientWidth < 1100;
+  //
+  // window.addEventListener('resize', () => {
+  //   let docWidth = document.body.clientWidth;
+  //   if (docWidth < 810) {
+  //     this.mobile = true;
+  //   } else {
+  //     this.mobile = false;
+  //   }
+  // });
 })
 
 // 组件挂载完成
@@ -93,6 +108,11 @@ function changeTheme() {
 </template>
 
 <style scoped>
+
+.toolbar-content a{
+  text-decoration: none;
+  color: var(--white);
+}
 
 .toolbar-content {
   width: 100%;
