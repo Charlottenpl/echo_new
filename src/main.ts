@@ -4,7 +4,9 @@ import './style.css'
 import App from './App.vue'
 import router from "./route/routes.ts";
 import net from "./api/net.ts";
+// @ts-ignore
 import common from "./utils/common.js"
+// @ts-ignore
 import constant from "./utils/constant.js"
 
 

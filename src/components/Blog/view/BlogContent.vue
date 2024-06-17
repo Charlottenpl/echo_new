@@ -29,7 +29,6 @@ onMounted(() => {
         if (window.innerWidth <= 768) {
           return
         }
-        initOutline()
       },
     })
   })

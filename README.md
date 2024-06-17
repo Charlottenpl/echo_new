@@ -4,6 +4,8 @@ BlogView highlight处理
 code中一行长度过长会拉伸宽度
 底部添加备案信息
 
+// @ts-ignore 好用
+
 
 ### UI
 1. blog详情页

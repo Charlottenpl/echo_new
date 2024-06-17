@@ -19,14 +19,20 @@ const SUCCESS = 0
 const FAIL = 1
 const imageState = ref(SUCCESS)
 const article = ref({
+  id: 18,
+  userId: 1,
   md: '',
+  videoUrl: "",
   articleCover: "/article_def.png",
   articleTitle: "记录我的第一个博客",
   username: "Charlottepl",
   createTime: "2024-06-15 02:14:32",
+  updateTime: "2024-06-17 02:14:32",
   viewCount: 1343,
   commentCount: 322,
   likeCount: 2334,
+  commentStatus: true,
+  treeHoleList: []
 
 })// 文章信息
 const id = ref('')
@@ -67,11 +73,11 @@ onUpdated(()=>{
 
 
 /**-------------------- listener methods ------------------------------*/
-function handleImageLoad(event) {
+function handleImageLoad() {
   // 处理图片加载成功的逻辑（如果需要）
   imageState.value = SUCCESS
 }
-function handleImageError(event) {
+function handleImageError() {
   imageState.value = FAIL; // 设置图片加载失败的标记
 }
 
@@ -158,13 +164,13 @@ function getTocbot() {
  * 初始化代码高亮组件
  */
 function highlight() {
-  let attributes = {
-    autocomplete: "off",
-    autocorrect: "off",
-    autocapitalize: "off",
-    spellcheck: "false",
-    contenteditable: "false"
-  };
+  // let attributes = {
+  //   autocomplete: "off",
+  //   autocorrect: "off",
+  //   autocapitalize: "off",
+  //   spellcheck: "false",
+  //   contenteditable: "false"
+  // };
 
   // $("pre").each(function (i, item) {
   //   let preCode = $(item).children("code");
@@ -357,7 +363,7 @@ function highlight() {
           </div>
 
           <!-- 最新进展 -->
-          <div v-if="!vue.$common.isEmpty(treeHoleList)" class="process-wrap">
+          <div v-if="!vue.$common.isEmpty(article.treeHoleList)" class="process-wrap">
             <el-collapse accordion value="1">
               <el-collapse-item title="最新进展" name="1">
                 <process :treeHoleList="treeHoleList" @deleteTreeHole="deleteTreeHole"></process>
