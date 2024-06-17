@@ -166,61 +166,61 @@ function highlight() {
     contenteditable: "false"
   };
 
-  $("pre").each(function (i, item) {
-    let preCode = $(item).children("code");
-    let classNameStr = preCode[0].className;
-    let classNameArr = classNameStr.split(" ");
-
-    let lang = "";
-    classNameArr.some(function (className) {
-      if (className.indexOf("language-") > -1) {
-        lang = className.substring(className.indexOf("-") + 1, className.length);
-        return true;
-      }
-    });
-
-    // 检测语言是否存在，不存在则自动检测
-    let language = hljs.getLanguage(lang.toLowerCase());
-    if (language === undefined) {
-      // 启用自动检测
-      let autoLanguage = hljs.highlightAuto(preCode.text());
-      preCode.removeClass("language-" + lang);
-      lang = autoLanguage.language;
-      if (lang === undefined) {
-        lang = "java";
-      }
-      preCode.addClass("language-" + lang);
-    } else {
-      lang = language.name;
-    }
-
-    $(item).addClass("highlight-wrap");
-    $(item).attr(attributes);
-    preCode.attr("data-rel", lang.toUpperCase()).addClass(lang.toLowerCase());
-    // 启用代码高亮
-    hljs.highlightBlock(preCode[0]);
-    // 启用代码行号
-    hljs.lineNumbersBlock(preCode[0]);
-  });
-
-  $("pre code").each(function (i, block) {
-    $(block).attr({
-      id: "hljs-" + i,
-    });
-
-    $(block).after(
-        '<a class="copy-code" href="javascript:" data-clipboard-target="#hljs-' +
-        i +
-        '"><i class="fa fa-clipboard" aria-hidden="true"></i></a>'
-    );
-    new ClipboardJS(".copy-code");
-  });
-
-  if ($(".entry-content").children("table").length > 0) {
-    $(".entry-content")
-        .children("table")
-        .wrap("<div class='table-wrapper'></div>");
-  }
+  // $("pre").each(function (i, item) {
+  //   let preCode = $(item).children("code");
+  //   let classNameStr = preCode[0].className;
+  //   let classNameArr = classNameStr.split(" ");
+  //
+  //   let lang = "";
+  //   classNameArr.some(function (className) {
+  //     if (className.indexOf("language-") > -1) {
+  //       lang = className.substring(className.indexOf("-") + 1, className.length);
+  //       return true;
+  //     }
+  //   });
+  //
+  //   // 检测语言是否存在，不存在则自动检测
+  //   let language = hljs.getLanguage(lang.toLowerCase());
+  //   if (language === undefined) {
+  //     // 启用自动检测
+  //     let autoLanguage = hljs.highlightAuto(preCode.text());
+  //     preCode.removeClass("language-" + lang);
+  //     lang = autoLanguage.language;
+  //     if (lang === undefined) {
+  //       lang = "java";
+  //     }
+  //     preCode.addClass("language-" + lang);
+  //   } else {
+  //     lang = language.name;
+  //   }
+  //
+  //   $(item).addClass("highlight-wrap");
+  //   $(item).attr(attributes);
+  //   preCode.attr("data-rel", lang.toUpperCase()).addClass(lang.toLowerCase());
+  //   // 启用代码高亮
+  //   hljs.highlightBlock(preCode[0]);
+  //   // 启用代码行号
+  //   hljs.lineNumbersBlock(preCode[0]);
+  // });
+  //
+  // $("pre code").each(function (i, block) {
+  //   $(block).attr({
+  //     id: "hljs-" + i,
+  //   });
+  //
+  //   $(block).after(
+  //       '<a class="copy-code" href="javascript:" data-clipboard-target="#hljs-' +
+  //       i +
+  //       '"><i class="fa fa-clipboard" aria-hidden="true"></i></a>'
+  //   );
+  //   new ClipboardJS(".copy-code");
+  // });
+  //
+  // if ($(".entry-content").children("table").length > 0) {
+  //   $(".entry-content")
+  //       .children("table")
+  //       .wrap("<div class='table-wrapper'></div>");
+  // }
 }
 </script>
 
