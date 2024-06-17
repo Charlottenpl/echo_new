@@ -7,6 +7,9 @@ import {echoed} from "../../../stores/maind";
 import {get} from "../../../api/article.ts"
 import * as tocbot from "tocbot";
 
+import hljs from 'highlight.js';
+import ClipboardJS from 'clipboard';
+
 const data = echoed()
 
 // 获取全局方法，好麻烦
@@ -164,69 +167,86 @@ function getTocbot() {
  * 初始化代码高亮组件
  */
 function highlight() {
-  // let attributes = {
-  //   autocomplete: "off",
-  //   autocorrect: "off",
-  //   autocapitalize: "off",
-  //   spellcheck: "false",
-  //   contenteditable: "false"
-  // };
 
-  // $("pre").each(function (i, item) {
-  //   let preCode = $(item).children("code");
-  //   let classNameStr = preCode[0].className;
-  //   let classNameArr = classNameStr.split(" ");
-  //
-  //   let lang = "";
-  //   classNameArr.some(function (className) {
-  //     if (className.indexOf("language-") > -1) {
-  //       lang = className.substring(className.indexOf("-") + 1, className.length);
-  //       return true;
-  //     }
-  //   });
-  //
-  //   // 检测语言是否存在，不存在则自动检测
-  //   let language = hljs.getLanguage(lang.toLowerCase());
-  //   if (language === undefined) {
-  //     // 启用自动检测
-  //     let autoLanguage = hljs.highlightAuto(preCode.text());
-  //     preCode.removeClass("language-" + lang);
-  //     lang = autoLanguage.language;
-  //     if (lang === undefined) {
-  //       lang = "java";
-  //     }
-  //     preCode.addClass("language-" + lang);
-  //   } else {
-  //     lang = language.name;
-  //   }
-  //
-  //   $(item).addClass("highlight-wrap");
-  //   $(item).attr(attributes);
-  //   preCode.attr("data-rel", lang.toUpperCase()).addClass(lang.toLowerCase());
-  //   // 启用代码高亮
-  //   hljs.highlightBlock(preCode[0]);
-  //   // 启用代码行号
-  //   hljs.lineNumbersBlock(preCode[0]);
-  // });
-  //
-  // $("pre code").each(function (i, block) {
-  //   $(block).attr({
-  //     id: "hljs-" + i,
-  //   });
-  //
-  //   $(block).after(
-  //       '<a class="copy-code" href="javascript:" data-clipboard-target="#hljs-' +
-  //       i +
-  //       '"><i class="fa fa-clipboard" aria-hidden="true"></i></a>'
-  //   );
-  //   new ClipboardJS(".copy-code");
-  // });
-  //
-  // if ($(".entry-content").children("table").length > 0) {
-  //   $(".entry-content")
-  //       .children("table")
-  //       .wrap("<div class='table-wrapper'></div>");
-  // }
+  document.querySelectorAll('pre').forEach((preElement) => {
+    const preCode = preElement.querySelector('code');
+    const classNameStr = preCode!.className;
+    const classNameArr = classNameStr.split(' ');
+    console.log("class arr", classNameArr)
+
+    let lang = '';
+    classNameArr.some((className) => {
+      if (className.startsWith('language-')) {
+        lang = className.substring(9); // 'language-'.length
+        return true;
+      }
+    });
+
+    console.log(`Language: ${lang}`);
+
+    // 检测语言是否存在，不存在则自动检测
+    let language = hljs.getLanguage(lang.toLowerCase());
+    if (language === undefined) {
+      if (preCode === null){
+        return true;
+      }
+
+      // 启用自动检测
+      let autoLanguage = hljs.highlightAuto(<string>preCode.textContent);
+      preCode.classList.remove("language-" + lang)
+      lang = autoLanguage.language == undefined ? "java" : autoLanguage.language;
+      preCode.classList.add("language-" + lang);
+    } else {
+      lang = language.name === undefined ? "java" : language.name;
+    }
+
+    preElement.classList.add("highlight-wrap");
+    preElement.setAttribute("autocomplete", "off");
+    preElement.setAttribute("autocorrect", "off");
+    preElement.setAttribute("autocapitalize", "off");
+    preElement.setAttribute("spellcheck", "false");
+    preElement.setAttribute("contenteditable", "false");
+    preCode?.setAttribute("data-rel", lang.toUpperCase());
+    preCode?.classList.add(lang.toLowerCase());
+    // 启用代码高亮
+    hljs.highlightBlock(<HTMLElement>preCode);
+    // 启用代码行号
+    // hljs.lineNumbersBlock(<HTMLElement>preCode?.firstElementChild);
+  });
+
+  document.querySelectorAll('pre').forEach((preElement) => {
+    let index = 0;
+    preElement.querySelectorAll('code').forEach((code)=>{
+      code.setAttribute("id", "hljs-"+index);
+      index++;
+
+      code.after('<a class="copy-code" href="javascript:" data-clipboard-target="#hljs-' +
+          index +
+          '"><i class="fa fa-clipboard" aria-hidden="true"></i></a>')
+
+      new ClipboardJS(".copy-code")
+    });
+    
+  });
+
+
+  if (document.querySelector(".entry-content")?.querySelector("table") != null){
+    document.querySelector(".entry-content")?.querySelectorAll("table").forEach((table)=>{
+      // 创建一个新的 div 元素
+      const wrapper = document.createElement('div');
+      wrapper.className = 'table-wrapper';
+
+      // 将 table 元素包裹在新创建的 div 中
+      // 先保存 table 的下一个兄弟节点
+      const nextSibling = table.nextElementSibling;
+      console.log(nextSibling)
+      // 将 table 移动到新创建的 div 中
+      wrapper.appendChild(table.cloneNode(true));
+      // 将新创建的 div 插入到 table 的原始位置
+      table.parentElement!.insertBefore(wrapper, nextSibling);
+      table.parentElement!.removeChild(table)
+    })
+  }
 }
 </script>
 
