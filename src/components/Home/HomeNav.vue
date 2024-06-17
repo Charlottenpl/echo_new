@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {echoed} from "../../stores/maind";
-import {getCurrentInstance, onBeforeMount, onMounted, onUpdated, ref} from "vue";
+import {getCurrentInstance, onBeforeMount, onMounted, onUnmounted, onUpdated, ref, watch} from "vue";
 
 const data = echoed()
 let navs = data.navs
@@ -13,6 +13,7 @@ const vue = cns!.appContext.config.globalProperties
 /**----------------------- return data -----------------------------------*/
 
 const hoverEnter = ref(false) // 标识鼠标是否移入div
+const scrollTop = ref(0)
 
 /**----------------------------------------------------------------------*/
 
@@ -23,6 +24,7 @@ const hoverEnter = ref(false) // 标识鼠标是否移入div
 // 组件挂载之前
 onBeforeMount(()=>{
   data.toolbar.enter = false
+  data.toolbar.visible = true
 
   // this.getWebInfo();
   // this.getSysConfig();
@@ -43,7 +45,9 @@ onBeforeMount(()=>{
 // 组件挂载完成
 onMounted(()=>{
   data.webInfo.host = window.location.host;
+  window.addEventListener('scroll', onScrollPage);
 })
+
 
 // await nextTick() 等待下一次DOM更新
 
@@ -52,11 +56,28 @@ onMounted(()=>{
 onUpdated(()=>{
 
 })
+
+
+onUnmounted(()=>{
+  window.removeEventListener('scroll', onScrollPage);
+})
+
+
 /**--------------------------------------------------------------------*/
 
 function changeTheme() {
 
 }
+
+const onScrollPage = () => {
+  scrollTop.value = document.documentElement.scrollTop || document.body.scrollTop;
+};
+
+watch(scrollTop, (newValue, oldValue)=>{
+  let enter = newValue > window.innerHeight / 2;
+  data.toolbar.visible = newValue - oldValue < 0
+  data.toolbar.enter = enter
+})
 
 </script>
 
@@ -127,6 +148,12 @@ function changeTheme() {
 }
 
 .toolbar-content.enter {
+  background: var(--toolbarBackground);
+  color: var(--toolbarFont);
+  box-shadow: 0 1px 3px 0 rgba(0, 34, 77, 0.05);
+}
+
+.toolbar-content.enter a{
   background: var(--toolbarBackground);
   color: var(--toolbarFont);
   box-shadow: 0 1px 3px 0 rgba(0, 34, 77, 0.05);

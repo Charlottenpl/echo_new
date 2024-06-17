@@ -112,7 +112,7 @@ function mdArticle(content: string) {
   nextTick(()=>{
     // 给所有
       vue.$common.imgShow(".entry-content img");
-    //   this.highlight();
+      highlight();
       addId();
       getTocbot();
   })
@@ -134,13 +134,9 @@ function addId() {
 
 
 /**
- *
+ * 初始化toc
  */
 function getTocbot() {
-  // let script = document.createElement('script');
-  // script.type = 'text/javascript';
-  // script.src = vue.$constant.tocbot;
-  // document.getElementsByTagName('head')[0].appendChild(script);
 
   // 引入成功
   tocbot.init({
@@ -154,6 +150,76 @@ function getTocbot() {
   });
   if (vue.$common.mobile()) {
     isMobel.value = true
+  }
+}
+
+
+/**
+ * 初始化代码高亮组件
+ */
+function highlight() {
+  let attributes = {
+    autocomplete: "off",
+    autocorrect: "off",
+    autocapitalize: "off",
+    spellcheck: "false",
+    contenteditable: "false"
+  };
+
+  $("pre").each(function (i, item) {
+    let preCode = $(item).children("code");
+    let classNameStr = preCode[0].className;
+    let classNameArr = classNameStr.split(" ");
+
+    let lang = "";
+    classNameArr.some(function (className) {
+      if (className.indexOf("language-") > -1) {
+        lang = className.substring(className.indexOf("-") + 1, className.length);
+        return true;
+      }
+    });
+
+    // 检测语言是否存在，不存在则自动检测
+    let language = hljs.getLanguage(lang.toLowerCase());
+    if (language === undefined) {
+      // 启用自动检测
+      let autoLanguage = hljs.highlightAuto(preCode.text());
+      preCode.removeClass("language-" + lang);
+      lang = autoLanguage.language;
+      if (lang === undefined) {
+        lang = "java";
+      }
+      preCode.addClass("language-" + lang);
+    } else {
+      lang = language.name;
+    }
+
+    $(item).addClass("highlight-wrap");
+    $(item).attr(attributes);
+    preCode.attr("data-rel", lang.toUpperCase()).addClass(lang.toLowerCase());
+    // 启用代码高亮
+    hljs.highlightBlock(preCode[0]);
+    // 启用代码行号
+    hljs.lineNumbersBlock(preCode[0]);
+  });
+
+  $("pre code").each(function (i, block) {
+    $(block).attr({
+      id: "hljs-" + i,
+    });
+
+    $(block).after(
+        '<a class="copy-code" href="javascript:" data-clipboard-target="#hljs-' +
+        i +
+        '"><i class="fa fa-clipboard" aria-hidden="true"></i></a>'
+    );
+    new ClipboardJS(".copy-code");
+  });
+
+  if ($(".entry-content").children("table").length > 0) {
+    $(".entry-content")
+        .children("table")
+        .wrap("<div class='table-wrapper'></div>");
   }
 }
 </script>
