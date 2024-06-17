@@ -133,6 +133,7 @@ watch(scrollTop, (newValue, oldValue)=>{
 .toolbar-content a{
   text-decoration: none;
   color: var(--white);
+  font-weight: bold;
 }
 
 .toolbar-content {
