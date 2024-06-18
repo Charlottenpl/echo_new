@@ -214,17 +214,32 @@ function highlight() {
     // hljs.lineNumbersBlock(<HTMLElement>preCode?.firstElementChild);
   });
 
+  let index = 0;
   document.querySelectorAll('pre').forEach((preElement) => {
-    let index = 0;
+
     preElement.querySelectorAll('code').forEach((code)=>{
       code.setAttribute("id", "hljs-"+index);
+
+      let a = document.createElement('a');
+      a.className = "copy-code"
+      a.style.cursor = "pointer";
+      a.setAttribute("data-clipboard-target", "#hljs-" +index);
+      a.setAttribute("data-clipboard-action", "copy");
+      a.textContent = "copy"
+
+      code.after(a)
+
+      const c = new ClipboardJS(".copy-code");
+      c.on('success', ()=>{
+        console.log('copy success');
+      });
+
+      c.on('error', e=>{
+        console.log(e);
+      })
+
+
       index++;
-
-      code.after('<a class="copy-code" href="javascript:" data-clipboard-target="#hljs-' +
-          index +
-          '"><i class="fa fa-clipboard" aria-hidden="true"></i></a>')
-
-      new ClipboardJS(".copy-code")
     });
     
   });
