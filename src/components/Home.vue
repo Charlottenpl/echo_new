@@ -3,6 +3,7 @@
 import {echoed} from "../stores/maind";
 import {getCurrentInstance, onBeforeMount, onMounted, onUpdated, ref} from "vue";
 import HomeNav from "./Home/HomeNav.vue";
+import Footer from "./Home/Footer.vue";
 
 const data = echoed()
 let navs = data.navs
@@ -59,6 +60,8 @@ onUpdated(()=>{
     <div id="main-container">
       <router-view></router-view>
     </div>
+
+    <Footer/>
 
     <!-- 点击动画 -->
     <canvas v-if="mouseAnimation" id="mousedown"
