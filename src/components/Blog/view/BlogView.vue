@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import MarkdownIt from 'markdown-it';
 import multimdTable from 'markdown-it-multimd-table';
+import comment from "../../comment/comment.vue";
 
 import {onBeforeMount, onMounted, onUpdated, ref, getCurrentInstance, nextTick} from "vue"; // 对于基本类型的数据（如字符串、数字和布尔值），使用 ref；对于复杂类型（如对象和数组），使用 reactive
 import {echoed} from "../../../stores/maind";
@@ -398,15 +399,15 @@ function highlight() {
           </div>
 
           <!-- 最新进展 -->
-          <div v-if="!vue.$common.isEmpty(article.treeHoleList)" class="process-wrap">
-            <el-collapse accordion value="1">
-              <el-collapse-item title="最新进展" name="1">
-                <process :treeHoleList="treeHoleList" @deleteTreeHole="deleteTreeHole"></process>
-              </el-collapse-item>
-            </el-collapse>
+<!--          <div v-if="!vue.$common.isEmpty(article.treeHoleList)" class="process-wrap">-->
+<!--            <el-collapse accordion value="1">-->
+<!--              <el-collapse-item title="最新进展" name="1">-->
+<!--                <process :treeHoleList="treeHoleList" @deleteTreeHole="deleteTreeHole"></process>-->
+<!--              </el-collapse-item>-->
+<!--            </el-collapse>-->
 
-            <hr>
-          </div>
+<!--            <hr>-->
+<!--          </div>-->
 
           <!-- 文章内容 -->
           <div v-html="mdHtml" class="entry-content"></div>

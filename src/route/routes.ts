@@ -14,7 +14,7 @@ const routes = [
         component: Home,
         children: [
             {
-                path: '',
+                path: '/',
                 component: Welcome,
             },
             {
