@@ -25,6 +25,7 @@ div {
 
 
 body {
+    width: 100%;
     margin: 0;
     display: flex;
     place-items: center;
@@ -64,6 +65,7 @@ button:focus-visible {
 }
 
 #app {
+    width: 100%;
     margin: 0;
     padding: 0;
 }
