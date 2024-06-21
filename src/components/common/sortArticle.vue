@@ -1,23 +1,34 @@
+<script setup lang="ts">
+import {echoed} from "../../stores/maind.ts";
+import {getCurrentInstance} from "vue";
+
+// 获取全局方法，好麻烦
+const cns = getCurrentInstance()
+const vue = cns!.appContext.config.globalProperties
+const data = echoed();
+
+
+const props = defineProps({
+  articleList: Array,
+  likes: Number
+})
+const articleList = props.articleList
+</script>
+
 <template>
-  <div v-if="!$common.isEmpty(articleList)" class="recent-post-container">
-    <div class="recent-post-item shadow-box background-opacity wow"
+  <div v-if="!vue.$common.isEmpty(articleList)" class="recent-post-container">
+    <div class="recent-post-item shadow-box background-opacity"
          v-for="(article, index) in articleList"
          :key="index"
          @click="$router.push({path: `/blog/${article.id}`})">
       <!-- 封面 -->
       <div class="recent-post-item-image">
-        <el-image class="my-el-image"
-                  v-once
-                  lazy
-                  :src="article.articleCover"
-                  fit="cover">
-          <div slot="error" class="image-slot myCenter" style="background-color: var(--lightGreen)">
-            <div class="error-text">
-              <div>遇事不决，可问春风</div>
-            </div>
-          </div>
-        </el-image>
-        <div class="transformCenter hasVideo" v-if="article.hasVideo">
+        <img
+            class="my-el-image"
+            style="object-fit: cover; animation: 2s ease 0s 1 normal none running header-effect;"
+            :src="vue.$common.isEmpty(article.articleCover)? '/article_def.png':article.articleCover" alt="">
+
+        <div class="transformCenter hasVideo" v-if="(article as any).hasVideo">
           <svg viewBox="0 0 1024 1024" width="60" height="60">
             <path
               d="M514 114.3c-219.9 0-398.9 178.9-398.9 398.9 0.1 219.9 179 398.8 398.9 398.8 219.9 0 398.8-178.9 398.8-398.8S733.9 114.3 514 114.3z m173 421.9L437.1 680.5c-17.7 10.2-39.8-2.6-39.8-23V368.9c0-20.4 22.1-33.2 39.8-23L687 490.2c17.7 10.2 17.7 35.8 0 46z"
@@ -40,12 +51,6 @@
           </svg>
           发布于 {{ article.createTime }}
         </div>
-        <!-- 标题 -->
-
-        <el-tooltip placement="top" effect="light">
-          <div slot="content">{{ article.articleTitle }}</div>
-          <h3>{{ article.articleTitle }}</h3>
-        </el-tooltip>
 
         <!-- 信息 -->
         <div class="post-meta" style="margin-bottom: 10px">
@@ -141,17 +146,6 @@
   </div>
 </template>
 
-<script>
-  export default {
-    props: {
-      articleList: {
-        type: Array
-      }
-    },
-    methods: {}
-  }
-</script>
-
 <style scoped>
 
   .recent-post-container {
@@ -161,15 +155,19 @@
 
   .recent-post-item {
     position: relative;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
     user-select: none;
     border-radius: 10px;
     overflow: hidden;
     margin: 10px;
-    height: 350px;
+    height: 300px;
     flex-shrink: 0;
-    width: calc(100% / 3 - 20px);
+    width: calc(33.33333% - 20px);
     cursor: pointer;
-    animation: zoomIn 0.8s ease-in-out;
+    -webkit-animation: zoomIn .8s ease-in-out;
+    animation: zoomIn .8s ease-in-out;
   }
 
   .recent-post-item-image {

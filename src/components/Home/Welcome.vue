@@ -37,7 +37,7 @@ const sortArticles = ref([
     [
       {
         id:0,
-        articleCover:'',
+        articleCover:'/small_def.jpg',
         hasVideo: true,
         createTime: "2024-06-15 02:14:32",
         articleTitle: 'title',
@@ -56,7 +56,7 @@ const sortArticles = ref([
       },
       {
         id:1,
-        articleCover:'',
+        articleCover:'/small_def.jpg',
         hasVideo: true,
         createTime: "2024-06-15 02:14:32",
         articleTitle: 'title',
@@ -75,7 +75,7 @@ const sortArticles = ref([
       },
       {
         id:0,
-        articleCover:'',
+        articleCover:'/small_def.jpg',
         hasVideo: true,
         createTime: "2024-06-15 02:14:32",
         articleTitle: 'title',
@@ -94,7 +94,7 @@ const sortArticles = ref([
       },
       {
         id:1,
-        articleCover:'',
+        articleCover:'/small_def.jpg',
         hasVideo: true,
         createTime: "2024-06-15 02:14:32",
         articleTitle: 'title',
@@ -113,7 +113,7 @@ const sortArticles = ref([
       },
       {
         id:0,
-        articleCover:'',
+        articleCover:'/small_def.jpg',
         hasVideo: true,
         createTime: "2024-06-15 02:14:32",
         articleTitle: 'title',
@@ -132,7 +132,7 @@ const sortArticles = ref([
       },
       {
         id:1,
-        articleCover:'',
+        articleCover:'/small_def.jpg',
         hasVideo: true,
         createTime: "2024-06-15 02:14:32",
         articleTitle: 'title',
@@ -153,7 +153,7 @@ const sortArticles = ref([
   [
     {
       id:0,
-      articleCover:'',
+      articleCover:'/small_def.jpg',
       hasVideo: true,
       createTime: "2024-06-15 02:14:32",
       articleTitle: 'title',
@@ -172,7 +172,7 @@ const sortArticles = ref([
     },
     {
       id:1,
-      articleCover:'',
+      articleCover:'/small_def.jpg',
       hasVideo: true,
       createTime: "2024-06-15 02:14:32",
       articleTitle: 'title',
@@ -191,7 +191,7 @@ const sortArticles = ref([
     },
     {
       id:0,
-      articleCover:'',
+      articleCover:'/small_def.jpg',
       hasVideo: true,
       createTime: "2024-06-15 02:14:32",
       articleTitle: 'title',
@@ -210,7 +210,7 @@ const sortArticles = ref([
     },
     {
       id:1,
-      articleCover:'',
+      articleCover:'/small_def.jpg',
       hasVideo: true,
       createTime: "2024-06-15 02:14:32",
       articleTitle: 'title',
@@ -229,7 +229,7 @@ const sortArticles = ref([
     },
     {
       id:0,
-      articleCover:'',
+      articleCover:'/small_def.jpg',
       hasVideo: true,
       createTime: "2024-06-15 02:14:32",
       articleTitle: 'title',
@@ -248,7 +248,7 @@ const sortArticles = ref([
     },
     {
       id:1,
-      articleCover:'',
+      articleCover:'/small_def.jpg',
       hasVideo: true,
       createTime: "2024-06-15 02:14:32",
       articleTitle: 'title',
@@ -269,7 +269,7 @@ const sortArticles = ref([
   [
     {
       id:0,
-      articleCover:'',
+      articleCover:'/small_def.jpg',
       hasVideo: true,
       createTime: "2024-06-15 02:14:32",
       articleTitle: 'title',
@@ -288,7 +288,7 @@ const sortArticles = ref([
     },
     {
       id:1,
-      articleCover:'',
+      articleCover:'/small_def.jpg',
       hasVideo: true,
       createTime: "2024-06-15 02:14:32",
       articleTitle: 'title',
@@ -307,7 +307,7 @@ const sortArticles = ref([
     },
     {
       id:0,
-      articleCover:'',
+      articleCover:'/small_def.jpg',
       hasVideo: true,
       createTime: "2024-06-15 02:14:32",
       articleTitle: 'title',
@@ -326,7 +326,7 @@ const sortArticles = ref([
     },
     {
       id:1,
-      articleCover:'',
+      articleCover:'/small_def.jpg',
       hasVideo: true,
       createTime: "2024-06-15 02:14:32",
       articleTitle: 'title',
@@ -345,7 +345,7 @@ const sortArticles = ref([
     },
     {
       id:0,
-      articleCover:'',
+      articleCover:'/small_def.jpg',
       hasVideo: true,
       createTime: "2024-06-15 02:14:32",
       articleTitle: 'title',
@@ -364,7 +364,7 @@ const sortArticles = ref([
     },
     {
       id:1,
-      articleCover:'',
+      articleCover:'/small_def.jpg',
       hasVideo: true,
       createTime: "2024-06-15 02:14:32",
       articleTitle: 'title',
@@ -385,7 +385,7 @@ const sortArticles = ref([
   [
     {
       id:0,
-      articleCover:'',
+      articleCover:'/small_def.jpg',
       hasVideo: true,
       createTime: "2024-06-15 02:14:32",
       articleTitle: 'title',
@@ -404,7 +404,7 @@ const sortArticles = ref([
     },
     {
       id:1,
-      articleCover:'',
+      articleCover:'/small_def.jpg',
       hasVideo: true,
       createTime: "2024-06-15 02:14:32",
       articleTitle: 'title',
@@ -423,7 +423,7 @@ const sortArticles = ref([
     },
     {
       id:0,
-      articleCover:'',
+      articleCover:'/small_def.jpg',
       hasVideo: true,
       createTime: "2024-06-15 02:14:32",
       articleTitle: 'title',
@@ -442,7 +442,7 @@ const sortArticles = ref([
     },
     {
       id:1,
-      articleCover:'',
+      articleCover:'/small_def.jpg',
       hasVideo: true,
       createTime: "2024-06-15 02:14:32",
       articleTitle: 'title',
@@ -461,7 +461,7 @@ const sortArticles = ref([
     },
     {
       id:0,
-      articleCover:'',
+      articleCover:'/small_def.jpg',
       hasVideo: true,
       createTime: "2024-06-15 02:14:32",
       articleTitle: 'title',
@@ -480,7 +480,7 @@ const sortArticles = ref([
     },
     {
       id:1,
-      articleCover:'',
+      articleCover:'/small_def.jpg',
       hasVideo: true,
       createTime: "2024-06-15 02:14:32",
       articleTitle: 'title',

@@ -4,7 +4,8 @@
 
     color-scheme: light dark;
     color: #213547;
-    background: linear-gradient(to top, rgb(255, 255, 255), rgb(247, 249, 252), rgb(242, 246, 252), rgb(223, 232, 252)); /*好网站：https://hypercolor.dev!*/
+    /*background: linear-gradient(to top, rgb(255, 255, 255), rgb(247, 249, 252), rgb(242, 246, 252), rgb(223, 232, 252)); !*好网站：https://hypercolor.dev!*!*/
+    background: var(--background);
 
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;

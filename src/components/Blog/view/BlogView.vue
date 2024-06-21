@@ -520,9 +520,13 @@ function highlight() {
 }
 
 .article-container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 40px 20px;
+  max-width: 1000px;
+  margin: 10px auto;
+  padding: 40px 40px;
+
+  /*border-radius: 10px;
+  -webkit-box-shadow: 0 3px 8px 6px rgba(7,17,27,0.05);
+  box-shadow: 0 3px 8px 6px rgba(7,17,27,0.05);*/
 }
 
 .article-update-time {
