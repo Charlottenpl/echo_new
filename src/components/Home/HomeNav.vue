@@ -94,7 +94,7 @@ watch(scrollTop, (newValue, oldValue)=>{
            class="toolbar-content myBetween">
         <!-- 网站名称 -->
         <div class="toolbar-title">
-          <h2 @click="$router.push({path: '/'})">{{data.webInfo.webName}}</h2>
+          <span @click="$router.push({path: '/'})">{{data.webInfo.webName}}</span>
         </div>
 
 
@@ -167,6 +167,8 @@ watch(scrollTop, (newValue, oldValue)=>{
 
 .toolbar-title {
   margin-left: 30px;
+  font-family: 'TitleFont', sans-serif;
+  font-size: 20px;
   cursor: pointer;
 }
 

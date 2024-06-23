@@ -3,6 +3,8 @@ import {echoed} from "../../stores/maind.ts";
 import {getCurrentInstance, ref} from "vue";
 import Aside from "./Aside.vue";
 import SortArticle from "../common/sortArticle.vue";
+import {get as articleList} from "../../api/article.ts"
+
 
 // 获取全局方法，好麻烦
 const cns = getCurrentInstance()
@@ -15,6 +17,7 @@ const SUCCESS = 0
 const FAIL = 1
 const imageState = ref(SUCCESS)
 const imageUrl = ref("/article_def.png")
+const showAside = ref(true);
 const sortInfo = ref([
   {
     id: 0,
@@ -500,6 +503,43 @@ const sortArticles = ref([
   ],
 ])
 
+/**------------------------ api methods -------------------------------*/
+
+function getClassList(){
+
+  let params = {
+
+  }
+
+  classList({data: params}).then((res)=>{
+    // 检查数据是否为空
+    if (!vue.$common.isEmpty(res.data)) {
+      // TODO list
+    }
+  }).catch((error) => {
+    console.log(error)
+  });
+
+}
+
+function getArticleList(){
+
+  let params = {
+
+  }
+
+  articleList({data: params}).then((res)=>{
+    // 检查数据是否为空
+    if (!vue.$common.isEmpty(res.data)) {
+      // TODO list
+    }
+  }).catch((error) => {
+    console.log(error)
+  });
+
+}
+
+/**--------------------------------------------------------------------*/
 
 
 /**-------------------- listener methods ------------------------------*/
@@ -795,6 +835,7 @@ function handleImageError() {
   display: flex;
   justify-content: center;
   width: 90%;
+  max-width: 1400px;
   padding: 0 20px 40px 20px;
   margin: 0 auto;
   flex-direction: row;

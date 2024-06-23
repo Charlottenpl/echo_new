@@ -44,7 +44,7 @@
 /* 深色主题 */
 @media (prefers-color-scheme: dark) {
   .name {
-    color: #d8e2f6;
+    /** color: #d8e2f6; */
   }
 }
 </style>
