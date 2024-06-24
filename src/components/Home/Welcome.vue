@@ -2,8 +2,8 @@
 import {echoed} from "../../stores/maind.ts";
 import {getCurrentInstance, ref} from "vue";
 import Aside from "./Aside.vue";
-import SortArticle from "../common/sortArticle.vue";
-import {get as articleList} from "../../api/article.ts"
+import sortArticle from "../common/sortArticle.vue";
+import {getArticle} from "../../api/article.ts"
 
 
 // 获取全局方法，好麻烦
@@ -528,7 +528,7 @@ function getArticleList(){
 
   }
 
-  articleList({data: params}).then((res)=>{
+  getArticle({data: params}).then((res)=>{
     // 检查数据是否为空
     if (!vue.$common.isEmpty(res.data)) {
       // TODO list

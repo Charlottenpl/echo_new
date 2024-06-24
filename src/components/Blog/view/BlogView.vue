@@ -5,7 +5,7 @@ import comment from "../../comment/comment.vue";
 
 import {onBeforeMount, onMounted, onUpdated, ref, getCurrentInstance, nextTick} from "vue"; // 对于基本类型的数据（如字符串、数字和布尔值），使用 ref；对于复杂类型（如对象和数组），使用 reactive
 import {echoed} from "../../../stores/maind";
-import {get as articleById} from "../../../api/article.ts"
+import {getArticle} from "../../../api/article.ts"
 import * as tocbot from "tocbot";
 
 import hljs from 'highlight.js';
@@ -90,14 +90,14 @@ function handleImageError() {
 
 /**------------------------ api methods -------------------------------*/
 
-function getArticle(){
+function getArticleById(){
 
   var params = {
     id : "1",
     password : ""
   }
 
-  articleById({data: params}).then((res)=>{
+  getArticle({data: params}).then((res)=>{
     // 检查数据是否为空
     if (!vue.$common.isEmpty(res.data)) {
       article.value = res.data;

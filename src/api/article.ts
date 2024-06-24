@@ -7,7 +7,7 @@ const baseUrl = "/api/article/"
  * 获取article详情
  * @param data
  */
-export function get(data: any) {
+export function getArticle(data: any) {
     return net({
         url: baseUrl + 'get',
         method: 'post',
