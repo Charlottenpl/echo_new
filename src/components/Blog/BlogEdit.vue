@@ -29,6 +29,10 @@ const isDark = ref(true)
 
 // 3. 在组件初始化时，就创建Vditor对象，并引用
 onMounted(() => {
+  data.toolbar.visible = false
+  data.edit.theme = "classic"
+  data.edit.currentTheme = "wechat"
+
   vditor.value = new Vditor('vditor',{
     // 编辑器中默认展示的文本
     value:content.value,
@@ -44,12 +48,12 @@ onMounted(() => {
 
     //编辑模式
     mode: "ir", //"wysiwyg" | "sv" | "ir";
-    theme: "dark",
+    theme: data.edit.theme,
     //预览主题，需要和theme联动
     preview:{
       theme: {
         //自定义主题的话应该是把path改成自己的url，然后list写url下面有哪些css主题文件，然后current写当前使用的主题是哪个
-        current: "dark",
+        current: data.edit.currentTheme,
         list: {"ant-design": "Ant Design", "dark": "Dark", "light": "Light", "wechat": "WeChat"},
         path: cdn
       },
