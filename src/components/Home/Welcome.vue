@@ -4,6 +4,7 @@ import {getCurrentInstance, ref} from "vue";
 import Aside from "./Aside.vue";
 import sortArticle from "../common/sortArticle.vue";
 import {getArticle} from "../../api/article.ts"
+import {getClassWithArticles} from "../../api/classes.ts";
 
 
 // 获取全局方法，好麻烦
@@ -511,24 +512,7 @@ function getClassList(){
 
   }
 
-  classList({data: params}).then((res)=>{
-    // 检查数据是否为空
-    if (!vue.$common.isEmpty(res.data)) {
-      // TODO list
-    }
-  }).catch((error) => {
-    console.log(error)
-  });
-
-}
-
-function getArticleList(){
-
-  let params = {
-
-  }
-
-  getArticle({data: params}).then((res)=>{
+  getClassWithArticles({data: params}).then((res)=>{
     // 检查数据是否为空
     if (!vue.$common.isEmpty(res.data)) {
       // TODO list

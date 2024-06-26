@@ -1,6 +1,6 @@
 import net from './net.ts';
 
-const baseUrl = "/api/article/"
+const baseUrl = "/article/"
 
 
 /**

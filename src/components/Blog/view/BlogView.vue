@@ -12,6 +12,8 @@ import hljs from 'highlight.js';
 import ClipboardJS from 'clipboard';
 
 const data = echoed()
+import { useRoute } from 'vue-router';
+const route = useRoute()
 
 // 获取全局方法，好麻烦
 const cns = getCurrentInstance()
@@ -39,10 +41,12 @@ const article = ref({
   treeHoleList: []
 
 })// 文章信息
-const id = ref(2)
+const id = ref(0)
 const mdHtml = ref('')
 const isMobel = ref(false)
 
+
+id.value = Number(route.params.id)
 /**----------------------------------------------------------------------*/
 
 
@@ -53,12 +57,12 @@ const isMobel = ref(false)
 // 组件挂载之前
 onBeforeMount(()=>{
   //TODO test
-  fetch("/2404.md").then(
-      response => response.text()
-  ).then(markdown => {
-    mdArticle(markdown)
-  })
-  // getArticle();
+  // fetch("/2404.md").then(
+  //     response => response.text()
+  // ).then(markdown => {
+  //   mdArticle(markdown)
+  // })
+  getArticleById(id.value);
 })
 
 // 组件挂载完成
@@ -90,10 +94,10 @@ function handleImageError() {
 
 /**------------------------ api methods -------------------------------*/
 
-function getArticleById(){
+function getArticleById(id: number){
 
   var params = {
-    id : "1",
+    id : id,
     password : ""
   }
 
