@@ -27,7 +27,7 @@ const imageState = ref(SUCCESS)
 const article = ref({
   id: 18,
   userId: 1,
-  md: '',
+  Content: '',
   videoUrl: "",
   articleCover: "/article_def.png",
   articleTitle: "记录我的第一个博客",
@@ -41,6 +41,20 @@ const article = ref({
   treeHoleList: []
 
 })// 文章信息
+
+const result = ref({
+  "message": {
+    "Id": 1,
+    "Title": "0508",
+    "Pic": "https://",
+    "Content": "## hello",
+    "Type": "test",
+    "CreateTime": "2024-06-28T11:33:32Z",
+    "UpdateTime": "2024-06-28T11:33:32Z",
+    "ClickNum": 0,
+    "Status": 0
+  }
+})
 const id = ref(0)
 const mdHtml = ref('')
 const isMobel = ref(false)
@@ -102,13 +116,12 @@ function getArticleById(id: number){
   }
 
   getArticle({data: params}).then((res)=>{
-    // 检查数据是否为空
-    if (!vue.$common.isEmpty(res.data)) {
-      article.value = res.data;
+    if (!vue.$common.isEmpty(res.message.Content)) {
+      article.value = res.message;
       // 最新文章列表
       // this.getNews();
 
-      mdArticle(article.value.md)
+      mdArticle(article.value.Content)
     }
   }).catch((error) => {
     console.log(error)

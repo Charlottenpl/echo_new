@@ -1,15 +1,24 @@
 import axios, {AxiosError, AxiosResponse} from 'axios';
 
+// http://localhost:8082/
+// https://小熊.fun/api/
+
+const baseUrl = "https://小熊.fun/api/";
+const debugUrl = "http://localhost:8082/";
 const net = axios.create({
-    baseURL: "https://小熊.fun/api/",
+    baseURL: debugUrl,
     timeout: 2000,
-    headers: { 'Content-Type': 'application/json;charset=utf-8' }
+    headers: {
+        'Content-Type': 'application/json;charset=utf-8'
+    },
+    withCredentials: true
 })
 
 
 // 请求拦截器
 net.interceptors.request.use(
     (config: any) => {
+        console.log("config: "+config)
         if (!config.headers) {
             throw new Error(
                 `好像没有请求头哦`
@@ -31,21 +40,8 @@ net.interceptors.request.use(
 // 响应拦截器
 net.interceptors.response.use(
     (response: AxiosResponse) => {
-        const { code, msg } = response.data;
-        if (code === '00000') {
-            return response.data;
-        } else {
-            // 响应数据为二进制流处理(Excel导出)
-            if (response.data instanceof ArrayBuffer) {
-                return response;
-            }
 
-            // ElMessage({
-            //     message: msg || '系统出错',
-            //     type: 'error'
-            // });
-            return Promise.reject(new Error(msg || 'Error'));
-        }
+        return response.data;
     },
     (error: any) => {
         if (error.response.data) {
