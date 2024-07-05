@@ -95,6 +95,7 @@ onMounted(() => {
 
 function on_save(md: string) {
   content.value = md
+  save()
   console.log('保存成功: '+content.value)
 }
 

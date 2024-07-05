@@ -8,6 +8,9 @@ import {echoed} from "../../../stores/maind";
 import {getArticle} from "../../../api/article.ts"
 import * as tocbot from "tocbot";
 
+import {getBlogFromRes} from "../../../bean/Blog.ts";
+import "../../../bean/Blog.ts"
+
 import hljs from 'highlight.js';
 import ClipboardJS from 'clipboard';
 
@@ -42,19 +45,7 @@ const article = ref({
 
 })// 文章信息
 
-const result = ref({
-  "message": {
-    "Id": 1,
-    "Title": "0508",
-    "Pic": "https://",
-    "Content": "## hello",
-    "Type": "test",
-    "CreateTime": "2024-06-28T11:33:32Z",
-    "UpdateTime": "2024-06-28T11:33:32Z",
-    "ClickNum": 0,
-    "Status": 0
-  }
-})
+const blog = ref<Blog | null>(null);
 const id = ref(0)
 const mdHtml = ref('')
 const isMobel = ref(false)
@@ -117,14 +108,18 @@ function getArticleById(id: number){
 
   getArticle({data: params}).then((res)=>{
     if (!vue.$common.isEmpty(res.message.Content)) {
-      article.value = res.message;
+      blog.value = getBlogFromRes(res.message);
       // 最新文章列表
       // this.getNews();
-
-      mdArticle(article.value.Content)
+      mdArticle(blog.value.content)
+    }else{
+      var placeholderMD = "> Sorry! error: article is empty."
+      mdArticle(placeholderMD)
     }
   }).catch((error) => {
     console.log(error)
+    var placeholderMD = "> Sorry! error: " + error
+    mdArticle(placeholderMD)
   });
 
 }
