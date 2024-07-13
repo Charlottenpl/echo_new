@@ -8,8 +8,7 @@ import {echoed} from "../../../stores/maind";
 import {getArticle} from "../../../api/article.ts"
 import * as tocbot from "tocbot";
 
-import {getBlogFromRes} from "../../../bean/Blog.ts";
-import "../../../bean/Blog.ts"
+import {Blog, getBlogFromRes} from "../../../bean/Blog.ts";
 
 import hljs from 'highlight.js';
 import ClipboardJS from 'clipboard';

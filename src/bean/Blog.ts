@@ -1,96 +1,96 @@
-class Blog {
-    private _id: number;
-    private _title: string;
-    private _pic: string;
-    private _content: string;
-    private _type: string;
-    private _create_time: string;
-    private _update_time: string;
-    private _click_num: number;
-    private _status: number;
+export class Blog {
+    private Id: number;
+    private Title: string;
+    private Pic: string;
+    private Content: string;
+    private Type: string;
+    private CreateTime: string;
+    private UpdateTime: string;
+    private ClickNum: number;
+    private Status: number;
 
     constructor(id?: number, title?: string, pic?: string, content?: string, type?: string, create_time?: string, update_time?: string, click_num?: number, status?: number) {
-        this._id = id ? id : 0;
-        this._title = title ? title : "";
-        this._pic = pic ? pic : "";
-        this._content = content ? content : "";
-        this._type = type ? type : "";
-        this._create_time = create_time ? create_time : "";
-        this._update_time = update_time ? update_time : "";
-        this._click_num = click_num ? click_num : 0;
-        this._status = status ? status : 0;
+        this.Id = id ? id : 0;
+        this.Title = title ? title : "";
+        this.Pic = pic ? pic : "";
+        this.Content = content ? content : "";
+        this.Type = type ? type : "";
+        this.CreateTime = create_time ? create_time : "";
+        this.UpdateTime = update_time ? update_time : "";
+        this.ClickNum = click_num ? click_num : 0;
+        this.Status = status ? status : 0;
     }
 
     get id(): number {
-        return this._id;
+        return this.Id;
     }
 
     set id(value: number) {
-        this._id = value;
+        this.Id = value;
     }
 
     get title(): string {
-        return this._title;
+        return this.Title;
     }
 
     set title(value: string) {
-        this._title = value;
+        this.Title = value;
     }
 
     get pic(): string {
-        return this._pic;
+        return this.Pic;
     }
 
     set pic(value: string) {
-        this._pic = value;
+        this.Pic = value;
     }
 
     get content(): string {
-        return this._content;
+        return this.Content;
     }
 
     set content(value: string) {
-        this._content = value;
+        this.Content = value;
     }
 
     get type(): string {
-        return this._type;
+        return this.Type;
     }
 
     set type(value: string) {
-        this._type = value;
+        this.Type = value;
     }
 
-    get create_time(): string {
-        return this._create_time;
+    get create_ime(): string {
+        return this.CreateTime;
     }
 
-    set create_time(value: string) {
-        this._create_time = value;
+    set create_ime(value: string) {
+        this.CreateTime = value;
     }
 
     get update_time(): string {
-        return this._update_time;
+        return this.UpdateTime;
     }
 
     set update_time(value: string) {
-        this._update_time = value;
+        this.UpdateTime = value;
     }
 
     get click_num(): number {
-        return this._click_num;
+        return this.ClickNum;
     }
 
     set click_num(value: number) {
-        this._click_num = value;
+        this.ClickNum = value;
     }
 
     get status(): number {
-        return this._status;
+        return this.Status;
     }
 
     set status(value: number) {
-        this._status = value;
+        this.Status = value;
     }
 
 }
@@ -115,7 +115,7 @@ export function getBlogFromRes(res: any): Blog {
     blog.pic = res.Pic;
     blog.content = res.Content;
     blog.type = res.Type;
-    blog.create_time = res.CreateTime;
+    blog.createTime = res.CreateTime;
     blog.update_time = res.UpdateTime;
     blog.click_num = res.ClickNum;
     blog.status = res.Status;

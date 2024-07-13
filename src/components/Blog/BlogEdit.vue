@@ -1,15 +1,21 @@
 <script setup lang="ts">
 
-import {onBeforeMount, onMounted, ref} from "vue";
+import {getCurrentInstance, onBeforeMount, onMounted, ref} from "vue";
 import {useRoute} from "vue-router";
+import {addBlog, getArticle, updateBlog} from "../../api/article.ts"
+
 const content = ref<string>("");
 const route = useRoute()
-const id = ref('')
+const id = ref(0)
 const data = echoed()
 const btns = data.blog_edit_btns
 
+// 获取全局方法，好麻烦
+const cns = getCurrentInstance()
+const vue = cns!.appContext.config.globalProperties
+
 onBeforeMount(()=>{
-  id.value = <string>route.params.articleId;
+  id.value = Number(route.params.id);
 })
 
 // 1.1 引入Vditor 构造函数
@@ -17,14 +23,14 @@ import Vditor from 'vditor'
 // 1.2 引入样式
 import 'vditor/dist/index.css';
 import {echoed} from "../../stores/maind";
-import net from "../../api/net.ts";
+import {Blog, getBlogFromRes} from "../../bean/Blog.ts";
 
 const cdn = "https://unpkg.com/vditor@3.10.3/dist/css/content-theme/" //https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/ or https://unpkg.com/vditor@3.10.3/dist/css/content-theme
 
 const hljs_theme = "dracula" //
 // 2. 获取DOM引用
 const vditor = ref()
-
+const blog = ref<Blog | null>(null);
 const isDark = ref(true)
 
 // 3. 在组件初始化时，就创建Vditor对象，并引用
@@ -33,9 +39,48 @@ onMounted(() => {
   data.edit.theme = "classic"
   data.edit.currentTheme = "wechat"
 
+  if (id.value == -1){ // New
+    blog.value = new Blog()
+    blog.value.id = -1
+    blog.value.title = "test" // TODO 找位置添加标题
+    initEditor()
+  }else{ // Update
+    getArticleById(id.value)
+  }
+
+})
+
+
+function getArticleById(id: number){
+
+  var params = {
+    id : id,
+    password : ""
+  }
+
+  getArticle({data: params}).then((res)=>{
+    if (!vue.$common.isEmpty(res.message.Content)) {
+      blog.value = getBlogFromRes(res.message);
+      initEditor()
+    }else{
+      var placeholderMD = "> Sorry! error: article is empty."
+      alert(placeholderMD)
+    }
+  }).catch((error) => {
+    console.log(error)
+    var placeholderMD = "> Sorry! error: " + error
+    alert(placeholderMD)
+  });
+
+}
+
+
+function initEditor(){
+
+
   vditor.value = new Vditor('vditor',{
     // 编辑器中默认展示的文本
-    value:content.value,
+    value:blog.value!.content,
     //打字机模式
     typewriterMode: true,
     //占位内容
@@ -68,7 +113,7 @@ onMounted(() => {
     comment:{
       enable: false,
       add(id, text, commentsData) {
-          alert(id+text+commentsData)
+        alert(id+text+commentsData)
       },
     },
     outline:{
@@ -88,9 +133,8 @@ onMounted(() => {
     }
   })
 
+}
 
-
-})
 
 
 function on_save(md: string) {
@@ -100,10 +144,32 @@ function on_save(md: string) {
 }
 
 var save = function save() {
-  // let it = vditor.value as Vditor
-  // it.disabled()
   content.value = vditor.value.getValue()
   console.log(content.value)
+  blog.value!.content = content.value
+
+  if (blog.value.id == -1){
+    blog.value!.create_ime = "2024-07-05T13:30:00.000Z"
+    blog.value!.update_time = "2024-07-05T13:30:00.000Z"
+    addBlog(<Blog>blog.value).then((res)=>{
+      console.log("add success: " + res)
+      blog.value!.id = res.id
+    }).catch(()=>{
+
+    }).finally(()=>{
+
+    });
+  }else{
+
+    updateBlog(<Blog>blog.value!).then((res)=>{
+      console.log("update success: " + res)
+    }).catch(()=>{
+
+    }).finally(()=>{
+
+    });
+  }
+
 }
 
 var change_theme = function() {
@@ -114,32 +180,11 @@ var change_theme = function() {
       isDark.value? "dracula":"github");
 }
 
-if (false){
-  save()
-  change_theme()
-}
 
 function handleClick(action: string) {
   const fun = eval(action);
   new fun()
 
-  net({
-    url:"/list",
-    method:"get"
-  }).then((res)=>{
-    alert(res)
-  })
-
-  net.post(
-      "/list",
-      {
-
-      },
-      {
-
-      }).then((_)=>{
-        
-  })
 }
 
 </script>

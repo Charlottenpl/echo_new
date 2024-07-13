@@ -9,6 +9,9 @@ import common from "./utils/common.js"
 // @ts-ignore
 import constant from "./utils/constant.js"
 
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
+
 
 // 引入css
 import './assets/css/animation.css'
@@ -22,5 +25,5 @@ const app = createApp(App);
 app.config.globalProperties.$net = net;  //配置axios的全局引用
 app.config.globalProperties.$common = common;
 app.config.globalProperties.$constant = constant;
-app.use(createPinia()).use(router).mount('#app')
+app.use(createPinia()).use(router).use(ElementPlus).mount('#app')
 

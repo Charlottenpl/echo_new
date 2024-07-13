@@ -63,11 +63,6 @@ onUpdated(()=>{
 
     <Footer/>
 
-    <!-- 点击动画 -->
-    <canvas v-if="mouseAnimation" id="mousedown"
-            style="position:fixed;left:0;top:0;pointer-events:none;z-index: 1000">
-    </canvas>
-
     <!-- 图片预览 -->
     <div id="outerImg">
       <div id="innerImg" style="position:absolute">
