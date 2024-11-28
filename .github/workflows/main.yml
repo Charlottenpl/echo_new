@@ -43,7 +43,7 @@ jobs:
           port: 22  # 根据你的服务器配置调整端口，默认是 22
           passphrase: ${{ secrets.SSH_PRIVATE_KEY_PASSPHRASE }}  # GitHub Secrets 中存储的密码短语
           script: |
-            TARGET_PATH="${{ secrets.TARGET_PATH }}"  # 从 GitHub Secrets 获取目标路径
+            TARGET_PATH="/echo/echo_blog"  # 从 GitHub Secrets 获取目标路径，but，获取到是***
             echo "Deploying to ${TARGET_PATH}..."
             
             # 在远程服务器上执行的脚本
