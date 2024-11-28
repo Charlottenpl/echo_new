@@ -58,4 +58,4 @@ jobs:
             rm -rf ${TARGET_PATH}/dist  # 删除目标路径中的旧 dist
             mkdir -p ${TARGET_PATH}/dist  # 创建新的 dist 目录
             
-            cp -r ${GITHUB_WORKSPACE}/dist/* ${TARGET_PATH}/dist/  # 上传新的 dist 文件
+            cp -r ./dist/* ${TARGET_PATH}/dist/  # 上传新的 dist 文件
