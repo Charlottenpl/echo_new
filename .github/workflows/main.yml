@@ -41,6 +41,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}  # SSH 用户名
           key: ${{ secrets.SSH_PRIVATE_KEY }}  # SSH 密钥（确保将私钥添加到 GitHub Secrets）
           port: 22  # 根据你的服务器配置调整端口，默认是 22
+          passphrase: ${{ secrets.SSH_PRIVATE_KEY_PASSPHRASE }}  # GitHub Secrets 中存储的密码短语
           script: |
             TARGET_PATH="${{ secrets.TARGET_PATH }}"  # 从 GitHub Secrets 获取目标路径
             echo "Deploying to ${TARGET_PATH}..."
