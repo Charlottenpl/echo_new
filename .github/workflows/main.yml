@@ -47,6 +47,6 @@ jobs:
             echo "Deploying to ${TARGET_PATH}..."
             
             # 在远程服务器上执行的脚本
-            rm -rf ${secrets.TARGET_PATH}/dist  # 删除目标路径中的旧 dist
-            mkdir -p ${secrets.TARGET_PATH}/dist  # 创建新的 dist 目录
+            rm -rf ${TARGET_PATH}/dist  # 删除目标路径中的旧 dist
+            mkdir -p ${TARGET_PATH}/dist  # 创建新的 dist 目录
             cp -r ${GITHUB_WORKSPACE}/dist/* ${TARGET_PATH}/dist/  # 上传新的 dist 文件
