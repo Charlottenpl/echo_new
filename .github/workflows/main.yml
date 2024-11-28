@@ -39,7 +39,7 @@ jobs:
 
       # 4.1 打印当前工作路径
       - name: Show work dir
-        run: ls -l
+        run: ls ./dist -l
 
 
       # 上传打包资源
