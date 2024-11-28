@@ -33,22 +33,14 @@ jobs:
       - name: Build project
         run: pnpm run build
 
-      # 4.1 打印当前工作路径
-      - name: Show work path
-        run: pwd
 
-      # 4.1 打印当前工作路径
-      - name: Show work dir
-        run: ls ./dist -l
-
-
-      # 上传打包资源
+      # 5. 上传打包资源
       - name: Deploy
         uses: easingthemes/ssh-deploy@v5.1.0
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          ARGS: '-avz'
+          ARGS: '-avz --delete'
           SOURCE: 'dist/'
           REMOTE_HOST: ${{ secrets.SSH_HOST }}
           REMOTE_USER: ${{ secrets.SSH_USERNAME }}
-          TARGET: ${{ secrets.TARGET_PATH }} # 服务器目标路径/
+          TARGET: ${{ secrets.TARGET_PATH }} # 服务器目标路径
