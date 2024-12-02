@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - master  # 当 push 到 master 分支时触发工作流
+      - dev-center-ui
+    tags:
+      - dep.*
 
 jobs:
   build-and-deploy:
