@@ -5,6 +5,8 @@ import Aside from "./Aside.vue";
 import sortArticle from "../common/sortArticle.vue";
 import { getArticleByType} from "../../api/article.ts"
 import BlogLIst from "./BlogLIst.vue";
+import * as jinrishici from "jinrishici";
+
 
 
 // 获取全局方法，好麻烦
@@ -505,10 +507,19 @@ const sortArticles = ref([
 ])
 
 onMounted(()=>{
+  getOneWord()
   getClassList(1)
 })
 
 /**------------------------ api methods -------------------------------*/
+
+function getOneWord(){
+  jinrishici.load(result => {
+    data.userInfo.shici = result.data.content
+  }, err => {
+    console.log("get shici fail" + err);
+  })
+}
 
 function getClassList(type: number){
 
@@ -561,8 +572,15 @@ function handleImageError() {
   <!-- 首页文字 打字机特效 -->
   <div class="signature-wall myCenter my-animation-hideToShow">
     <!--标题-->
-    <h1 class="playful">
-      这个是标题
+    <h1 v-if="data.userInfo.useMsg"
+        class="playful">
+      {{data.userInfo.msg}}
+    </h1>
+    <!--或者使用每日一句-->
+    <h1 v-else
+        class="playful"
+        id="jinrishici-sentence">
+      {{data.userInfo.shici}}
     </h1>
   </div>
 
@@ -619,6 +637,8 @@ function handleImageError() {
   z-index: -1;
 }
 
+
+/*控制图片高度*/
 .signature-wall {
   /* 向下排列 */
   display: flex;

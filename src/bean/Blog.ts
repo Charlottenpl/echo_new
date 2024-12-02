@@ -61,11 +61,11 @@ export class Blog {
         this.Type = value;
     }
 
-    get create_ime(): string {
+    get create_time(): string {
         return this.CreateTime;
     }
 
-    set create_ime(value: string) {
+    set create_time(value: string) {
         this.CreateTime = value;
     }
 
@@ -115,7 +115,7 @@ export function getBlogFromRes(res: any): Blog {
     blog.pic = res.Pic;
     blog.content = res.Content;
     blog.type = res.Type;
-    blog.createTime = res.CreateTime;
+    blog.create_time = res.CreateTime;
     blog.update_time = res.UpdateTime;
     blog.click_num = res.ClickNum;
     blog.status = res.Status;

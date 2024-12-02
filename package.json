@@ -16,6 +16,7 @@
     "highlight": "^0.2.4",
     "highlight.js": "^11.9.0",
     "highlightjs-line-numbers.js": "^2.8.0",
+    "jinrishici": "^1.0.6",
     "markdown-it": "^14.1.0",
     "markdown-it-multimd-table": "^4.2.3",
     "pinia": "^2.1.7",

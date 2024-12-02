@@ -8,7 +8,10 @@ export const echoed = defineStore('main_store', {
         },
         userInfo: {
             img: "/public/def.jpg", //https://images.cnblogs.com/cnblogs_com/charlottepl/1676587/o_210408083032QQ%E5%9B%BE%E7%89%8720210408162958.jpg
-            token: ""
+            token: "",
+            msg: "Charlotte.pl 的博客",
+            shici: "坐见幽州骑，长驱河洛昏",
+            useMsg: false, // 使用msg （或者使用每日一句）
         },
         navs: [ //✅
             {

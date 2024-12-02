@@ -149,7 +149,7 @@ var save = function save() {
   blog.value!.content = content.value
 
   if (blog.value.id == -1){
-    blog.value!.create_ime = "2024-07-05T13:30:00.000Z"
+    blog.value!.create_time = "2024-07-05T13:30:00.000Z"
     blog.value!.update_time = "2024-07-05T13:30:00.000Z"
     addBlog(<Blog>blog.value).then((res)=>{
       console.log("add success: " + res)
