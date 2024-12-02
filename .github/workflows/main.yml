@@ -3,7 +3,7 @@ name: Vue CI/CD
 on:
   push:
     branches:
-      - dev-center-ui # master  # 当 push 到 master 分支时触发工作流
+      - master  # 当 push 到 master 分支时触发工作流
 
 jobs:
   build-and-deploy:
